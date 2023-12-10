@@ -1,0 +1,14 @@
+*.idea
+/.idea/*
+*.log
+*.log.*
+.env
+.venv
+env/
+venv/
+ENV/
+*.spec
+*.iml
+vcs.xml
+__pycache__
+/__pycache__/*
