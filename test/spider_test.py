@@ -16,7 +16,7 @@ def area():
 
 def part_spider():
     param = {
-        "keyword": "Node.js",
+        "keyword": "Python",
         "page": 1,
         "pageSize": 1000,
         "area": "000000"
@@ -39,7 +39,7 @@ def full_spider_csv(type: str):
 
     for area in df[0]:
         param = {
-            "keyword": "Node.js",
+            "keyword": "Python",
             "page": 1,
             "pageSize": 1000,
             "area": area
@@ -64,7 +64,7 @@ def full_spider_db(type: str):
 
     for area in results:
         param = {
-            "keyword": "Node.js",
+            "keyword": "Python",
             "page": 1,
             "pageSize": 1000,
             "area": area[0]
