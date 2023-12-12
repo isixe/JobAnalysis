@@ -215,20 +215,9 @@ def start(save_engine: str):
 
     if save_engine == 'both':
         data_csv = cleaner.process(data["csv"])
-        cleaner.save(data_csv, save_engine)
+        cleaner.save(data_csv, "csv")
         data_db = cleaner.process(data["db"])
-        cleaner.save(data_db, save_engine)
+        cleaner.save(data_db, "db")
     else:
         data = cleaner.process(data[save_engine])
         cleaner.save(data, save_engine)
-
-
-if __name__ == '__main__':
-    '''
-    薪资（散点图）
-    学位要求（柱状图，饼图？）
-    工作年限（饼图），城市（地图）
-    公司规模（柱状图，饼图？）
-    公司类型（饼图）
-    '''
-    start(save_engine='csv')
