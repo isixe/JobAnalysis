@@ -8,7 +8,7 @@ import os
 import re
 import sqlite3
 import pandas as pd
-from spider import logger
+from function.spider import logger
 
 pd.set_option('display.max_rows', None)
 
@@ -17,7 +17,7 @@ class JobCleaner51(object):
     """ This cleaner is based on spider file"""
 
     def __init__(self):
-        self.root = os.path.abspath('..')
+        self.root = os.path.abspath('../..')
         self.CSV_FILE = '51job.csv'
         self.SQLITE_FILE = '51job.db'
         self.ORIGIN_CSV_FILE_PATH = os.path.join(self.root, "output/job/" + self.CSV_FILE)
