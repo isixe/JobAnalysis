@@ -40,7 +40,7 @@ class JobSipder51(object):
         self.baseUrl = ('https://we.51job.com/api/job/search-pc?api_key=51job&searchType=2&pageCode=sou%7Csou%7Csoulb'
                         '&sortType=0&function=&industry=&landmark=&metro=&requestId=&source=1&accountId=')
         self.fakeUrl = '&jobArea2=&jobType=&salary=&workYear=&degree=&companyType=&companySize=&issueDate='
-        self.root = os.path.abspath('../..')
+        self.root = os.path.abspath('..')
         self.CSV_FILE = '51job.csv'
         self.SQLITE_FILE = '51job.db'
         self.CSV_FILE_PATH = os.path.join(self.root, "output/job/" + self.CSV_FILE)
