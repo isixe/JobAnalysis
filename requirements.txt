@@ -4,3 +4,5 @@ fake-useragent==1.4.0
 pandas==2.1.3
 selenium==4.15.2
 requests==2.31.0
+flask~=3.0.0
+pyecharts~=2.0.4
