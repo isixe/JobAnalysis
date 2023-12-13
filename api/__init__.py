@@ -6,7 +6,7 @@
 # @Desc    : $END$
 
 from flask import Flask
-from web.api.views.index import index
+from api.views.index import index
 
 
 class App(Flask):
