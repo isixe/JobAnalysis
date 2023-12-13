@@ -1,4 +1,4 @@
-from api import App
+from web.api import App
 
 app = App(__name__)
 
