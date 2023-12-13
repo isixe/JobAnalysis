@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask
-from api.views.index import index
+from web.api.views.index import index
 
 
 class App(Flask):
