@@ -10,7 +10,7 @@ import re
 import sqlite3
 import requests
 import pandas as pd
-from function.spider import logger
+from spider import logger
 from fake_useragent import UserAgent
 
 class AreaSpider51(object):

@@ -12,7 +12,7 @@ import json
 import time
 import sqlite3
 import pandas as pd
-from function.spider import logger
+from spider import logger
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from fake_useragent import UserAgent
