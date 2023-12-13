@@ -1,8 +1,8 @@
 # !/usr/bin/env python
 # -*-coding:utf-8 -*-
 # @Time    : 2023/12/08 10:37
-# @Author  : Exisi
-# @Version : python3.10.6
+# @Author  : isixe
+# @Version : python3.11.2
 # @Desc    : area data spider
 
 import os

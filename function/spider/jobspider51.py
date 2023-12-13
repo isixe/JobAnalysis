@@ -2,7 +2,7 @@
 # -*-coding:utf-8 -*-
 # @Time    : 2023/10/31 10:36
 # @Author  : isixe
-# @Version : python3.10.6
+# @Version : python3.11.2
 # @Desc    : 51job data spider
 
 import os
@@ -28,8 +28,8 @@ class JobSipder51(object):
 
         :Args:
          - keyword: Search keyword
-         - page: Page number
-         - pageSize: Specify the number of data per page
+         - pages: Page number
+         - pageSize: Specify the number of data per pages
          - area: Specify the area to search for
         """
         self.keyword = keyword
@@ -63,7 +63,7 @@ class JobSipder51(object):
         During the building process, it is necessary to set up an anti crawler detection strategy by Option.
 
             .add_argument('headless')
-            -> Set headless page, run silently
+            -> Set headless pages, run silently
 
             .add_argument("--window-size=1920,1080")
             -> In headless status, browse without a window size, so if the size of the window is not specified,
@@ -271,7 +271,7 @@ class JobSipder51(object):
         fake = '&'.join(fake)
 
         url = self.baseUrl + extra + fake
-        logger.info('Crawling page ' + str(self.page))
+        logger.info('Crawling pages ' + str(self.page))
         logger.info('Crawling ' + url)
 
         web = self.__driver_builder()
@@ -312,12 +312,12 @@ def start(args: dict, save_engine: str):
     """ spider starter
 
     :Args:
-     - param: Url param, type Dict{'keyword': str, 'page': int, 'pageSize': int, 'area': str}
+     - param: Url param, type Dict{'keyword': str, 'pages': int, 'pageSize': int, 'area': str}
      - save_engine: Data storage engine, support for csv, db and both
     """
     if save_engine not in ['csv', 'db', 'both']:
         return logger.error("The data storage engine must be 'csv' , 'db' or 'both' ")
 
-    spider = JobSipder51(keyword=args['keyword'], page=args['page'], pageSize=args['pageSize'], area=args['area'])
+    spider = JobSipder51(keyword=args['keyword'], page=args['pages'], pageSize=args['pageSize'], area=args['area'])
     data_json = spider.get_data_json()
     spider.save(data_json, save_engine)

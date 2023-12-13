@@ -17,7 +17,7 @@ def area():
 def part_spider():
     param = {
         "keyword": "Python",
-        "page": 1,
+        "pages": 1,
         "pageSize": 1000,
         "area": "000000"
     }
@@ -40,7 +40,7 @@ def full_spider_csv(type: str):
     for area in df[0]:
         param = {
             "keyword": "Python",
-            "page": 1,
+            "pages": 1,
             "pageSize": 1000,
             "area": area
         }
@@ -65,7 +65,7 @@ def full_spider_db(type: str):
     for area in results:
         param = {
             "keyword": "Python",
-            "page": 1,
+            "pages": 1,
             "pageSize": 1000,
             "area": area[0]
         }

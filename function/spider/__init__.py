@@ -2,7 +2,7 @@
 # -*-coding:utf-8 -*-
 # @Time    : 2023/11/26 20:22
 # @Author  : isixe
-# @Version : python3.10.6
+# @Version : python3.11.2
 # @Desc    : global spider logger
 
 from log import handler_logger
