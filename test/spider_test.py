@@ -6,8 +6,8 @@
 # @Desc    : base spider test
 import sqlite3
 import pandas as pd
-from spider.area import areaspider51
-from spider import jobspider51, logger
+from function.spider.area import areaspider51
+from function.spider import jobspider51, logger
 
 
 def area():
