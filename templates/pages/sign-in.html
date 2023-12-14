@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="/static/img/logo/favicon.ico">
+    <link rel="apple-touch-icon" href="/static/img/logo/apple-touch-icon.png">
+    <link rel="icon" href="/static/img/logo/favicon.ico" sizes="48x48">
+    <link rel="icon" href="/static/img/logo/favicon.svg" sizes="any" type="image/svg+xml">
+    <title>
+        登录
+    </title>
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700"/>
+    <!-- Nucleo Icons -->
+    <link href="../../static/css/nucleo-icons.css" rel="stylesheet"/>
+    <link href="../../static/css/nucleo-svg.css" rel="stylesheet"/>
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <!-- CSS Files -->
+    <link id="pagestyle" href="../../static/css/material-dashboard.css?v=3.1.0" rel="stylesheet"/>
+    <link href="../../static/css/toastify.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-200">
+<div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+        <div class="col-12">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg blur border-radius-xl top-0 z-index-3 shadow position-absolute my-4 py-2 start-0 end-0 mx-4">
+                <div class="container-fluid ps-2 pe-0">
+                    <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3"
+                       href="/">
+                        <img src="/static/img/logo/favicon.ico" class="icon-xs mb-1" alt="main_logo">
+                        大数据后台
+                    </a>
+                    <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                          <span class="navbar-toggler-icon mt-2">
+                            <span class="navbar-toggler-bar bar1"></span>
+                            <span class="navbar-toggler-bar bar2"></span>
+                            <span class="navbar-toggler-bar bar3"></span>
+                          </span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navigation">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item">
+                                <a class="nav-link me-2" href="/register">
+                                    <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
+                                    注册
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link me-2" href="/login">
+                                    <i class="fas fa-key opacity-6 text-dark me-1"></i>
+                                    登录
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <a href="https://github.com/isixe/JobAnalysis"
+                       class="nav-link ms-6">
+                        <i class="fa fa-github text-dark me-0 m-lg-0" style="font-size: 1.6em" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </nav>
+            <!-- End Navbar -->
+        </div>
+    </div>
+</div>
+<main class="main-content  mt-0">
+    <div class="page-header align-items-start min-vh-100"
+         style="background-image: url('../static/img/background/illustration-signin.jpg');">
+        <span class="mask bg-gradient-dark opacity-6"></span>
+        <div class="container my-auto">
+            <div class="row">
+                <div class="col-lg-4 col-md-8 col-12 mx-auto">
+                    <div class="card z-index-0 fadeIn3 fadeInBottom">
+                        <div class="card-header p-0 mt-2">
+                            <h4 class="text-black font-weight-bolder text-center mt-2 mb-0 ">登录</h4>
+                        </div>
+                        <div class="card-body">
+                            <form role="form" class="text-start">
+                                <div class="input-group input-group-outline my-3">
+                                    <input type="text" name="username" class="form-control" placeholder="用户名">
+                                </div>
+                                <div class="input-group input-group-outline mb-3">
+                                    <input type="password" name="password" class="form-control" placeholder="密码"
+                                           required>
+                                </div>
+                                <div class="form-check form-switch d-flex align-items-center mb-3">
+                                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                                    <label class="form-check-label mb-0 ms-3" for="rememberMe">记住密码</label>
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" onclick="login()"
+                                            class="btn bg-gradient-primary w-100 my-4 mb-2">登录
+                                    </button>
+                                </div>
+                                <p class="mt-4 text-sm text-center">
+                                    暂无账号?
+                                    <a href="/register"
+                                       class="text-primary text-gradient font-weight-bold">注册</a>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer position-absolute bottom-2 py-2 w-100">
+            <div class="container">
+                <div class="row align-items-center justify-content-lg-between">
+                    <div class="col-12 col-md-6 my-auto">
+                        <div class="copyright text-center text-sm text-white text-lg-start">
+                            ©
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script>
+                            ,
+                            made with <i class="fa fa-heart" aria-hidden="true"></i> by
+                            <a href="https://github.com/isixe" class="font-weight-bold text-white"
+                               target="_blank">isixe</a>
+                            for a better job analysis.
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                            <li class="nav-item">
+                                <a href="https://github.com/isixe" class="nav-link text-white" target="_blank">isixe</a>
+                            </li>
+                            <!--                            <li class="nav-item">-->
+                            <!--                                <a href="https://www.creative-tim.com/blog" class="nav-link text-white" target="_blank">Blog</a>-->
+                            <!--                            </li>-->
+                            <li class="nav-item">
+                                <a href="https://www.gnu.org/licenses/gpl-3.0.en.html" class="nav-link pe-0 text-white"
+                                   target="_blank">License</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</main>
+
+<!--   Core JS Files   -->
+<script src="../../static/js/core/bootstrap.min.js"></script>
+
+<!--   Plugins JS Files   -->
+<script src="../../static/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="../../static/js/plugins/smooth-scrollbar.min.js"></script>
+<script src="../../static/js/plugins/toastify-js.js"></script>
+<script src="../../static/js/plugins/sweetalert2@11.js"></script>
+
+<script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+            damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+</script>
+<!-- Github buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="../../static/js/material-dashboard.min.js?v=3.1.0"></script>
+
+<!-- Setting Toast by toastify-js -->
+<script>
+    const showToast = (message) => {
+        Toastify({
+            text: message,
+            duration: 2000,
+            newWindow: true,
+            gravity: "top", // `top` or `bottom`
+            position: "center", // `left`, `center` or `right`
+            style: {
+                background: "#D81B60",
+            },
+            offset: {
+                y: 40
+            }
+        }).showToast();
+    }
+</script>
+
+<!-- Setting Toast by sweetalert -->
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+</script>
+
+<!-- auto save -->
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+        let savedUsername = localStorage.getItem('savedUsername');
+        let savedPassword = localStorage.getItem('savedPassword');
+
+        if (savedUsername && savedPassword) {
+            document.querySelector('input[name="username"]').value = savedUsername;
+            document.querySelector('input[name="password"]').value = savedPassword;
+            document.getElementById('rememberMe').checked = true;
+        }
+    });
+</script>
+
+<!-- Login request -->
+<script>
+    const login = () => {
+        let username = document.querySelector('input[name="username"]').value;
+        let password = document.querySelector('input[name="password"]').value;
+        let rememberMe = document.getElementById('rememberMe').checked;
+        const fields = [
+            {name: '用户名', value: username},
+            {name: '密码', value: password},
+        ];
+        for (let field of fields) {
+            if (!field.value) {
+                showToast(`${field.name}不能为空`);
+                return;
+            }
+        }
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({username: username, password: password})
+        }).then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.status === 1) {
+                    Toast.fire({
+                        icon: 'success',
+                        title: data.message
+                    });
+
+                    if (rememberMe) {
+                        localStorage.setItem('savedUsername', username);
+                        localStorage.setItem('savedPassword', password);
+                    } else {
+                        localStorage.removeItem('savedUsername')
+                        localStorage.removeItem('savedPassword');
+                    }
+                    window.location.href = window.location.origin;
+                }
+
+                if (data.status === 0) {
+                    showToast(data.message);
+                }
+            }).catch(error => {
+            Toast.fire({
+                icon: 'error',
+                title: '网络错误，请稍后重试'
+            });
+        });
+    }
+</script>
+</body>
+
+</html>
