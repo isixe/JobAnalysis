@@ -218,6 +218,7 @@
             document.querySelector('input[name="password"]').value = savedPassword;
             document.getElementById('rememberMe').checked = true;
         }
+
     });
 </script>
 
@@ -259,6 +260,7 @@
                         localStorage.removeItem('savedUsername')
                         localStorage.removeItem('savedPassword');
                     }
+                    localStorage.setItem('user', username);
                     window.location.href = window.location.origin;
                 }
 
