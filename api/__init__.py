@@ -6,6 +6,8 @@
 # @Desc    : $END$
 
 from flask import Flask
+
+from api.views.auth import auth
 from api.views.index import index
 
 
@@ -19,3 +21,4 @@ class App(Flask):
 
     def _register_blueprints(self):
         self.register_blueprint(index)
+        self.register_blueprint(auth)
