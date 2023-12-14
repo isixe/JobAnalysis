@@ -7,8 +7,11 @@
 
 from flask import Flask
 
-from api.views.auth import auth
-from api.views.index import index
+from web.views.auth import auth
+from web.views.index import index
+from web.views.show import show
+from web.views.predict import predict
+from web.views.analysis import analysis
 
 
 class App(Flask):
@@ -22,3 +25,12 @@ class App(Flask):
     def _register_blueprints(self):
         self.register_blueprint(index)
         self.register_blueprint(auth)
+        self.register_blueprint(show)
+        self.register_blueprint(predict)
+        self.register_blueprint(analysis)
+
+
+if __name__ == '__main__':
+    app = App(__name__)
+    app.debug = True
+    app.run()
