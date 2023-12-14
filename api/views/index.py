@@ -5,19 +5,16 @@
 # @Version : python3.11.2
 # @Desc    : home view
 
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, session
 
 index = Blueprint('index', __name__)
 
 
 @index.route('/')
 def home():
-    login = None
-    if not login:
-        return redirect(url_for('index.auth'))
+    """ home page """
+
+    username = session.get('user')
+    if not username:
+        return redirect(url_for('auth.sign_in'))
     return render_template('index.html')
-
-
-@index.route('/login')
-def auth():
-    return render_template('pages/sign-in.html')
