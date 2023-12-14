@@ -9,7 +9,7 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from api.models.user import User, Base
+from web.models.user import User, Base
 
 
 class Database():
@@ -19,7 +19,7 @@ class Database():
         """ Database init """
 
         self.root = os.path.abspath('..')
-        self.url = f'sqlite:///{os.path.join(self.root, "api/identifier.sqlite")}'
+        self.url = f'sqlite:///{os.path.join(self.root, "web/identifier.sqlite")}'
         self.engine = create_engine(self.url)
         self.Session = sessionmaker(bind=self.engine)
         self.__initialize_database()

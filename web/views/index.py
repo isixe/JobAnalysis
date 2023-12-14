@@ -10,11 +10,24 @@ from flask import Blueprint, render_template, redirect, url_for, session
 index = Blueprint('index', __name__)
 
 
+def login_required(view_func):
+    """ Login verification function
+
+    :Arg:
+     - view_func: view function
+    """
+    def wrapper(*args, **kwargs):
+        if 'user' not in session:
+            return redirect('/login')
+
+        return view_func(*args, **kwargs)
+
+    return wrapper
+
+
 @index.route('/')
+@login_required
 def home():
     """ home page """
 
-    username = session.get('user')
-    if not username:
-        return redirect(url_for('auth.sign_in'))
     return render_template('index.html')

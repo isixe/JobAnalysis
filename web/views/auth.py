@@ -5,17 +5,34 @@
 # @Version : python3.11.2
 # @Desc    : login and register view
 
-
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify, abort, session
-
-from api.models.result import Result
-from api.models.user import User
-from api.utils.database_builder import Database
+from functools import wraps
+from flask import Blueprint, render_template, request, redirect, abort, session
+from web.models.result import Result
+from web.models.user import User
+from web.utils.database_builder import Database
 
 auth = Blueprint('auth', __name__)
 
 
+def login_required(view_func):
+    """ Login verification function
+
+    :Arg:
+     - view_func: view function
+    """
+
+    @wraps(view_func)
+    def wrapper(*args, **kwargs):
+        if 'user' in session:
+            return redirect('/')
+
+        return view_func(*args, **kwargs)
+
+    return wrapper
+
+
 @auth.route('/login')
+@login_required
 def sign_in():
     """ Return login page """
 
@@ -23,6 +40,7 @@ def sign_in():
 
 
 @auth.route('/register')
+@login_required
 def sign_up():
     """ Return register page """
 
@@ -98,6 +116,16 @@ def register():
         db.close()
 
     response.set_message('注册成功')
+    response.set_status(1)
+    response.set_code(200)
+    return response.to_json()
+
+
+@auth.route('/api/logout', methods=["POST"])
+def logout():
+    session.pop('user')
+    response = Result()
+    response.set_message('退出成功')
     response.set_status(1)
     response.set_code(200)
     return response.to_json()
