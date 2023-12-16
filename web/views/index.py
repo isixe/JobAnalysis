@@ -5,7 +5,7 @@
 # @Version : python3.11.2
 # @Desc    : home view
 
-from flask import Blueprint, render_template, redirect, url_for, session
+from flask import Blueprint, render_template, redirect, session
 
 index = Blueprint('index', __name__)
 
