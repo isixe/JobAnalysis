@@ -70,5 +70,5 @@ class Result():
         """ Result convert to json """
 
         result_dict = {key: value for key, value in vars(self).items() if value is not None}
-        result_json = json.dumps(result_dict)
+        result_json = json.dumps(result_dict, ensure_ascii=False)
         return result_json
