@@ -69,7 +69,7 @@
                     <ul class="navbar-nav ms-5">
                         <li class="nav-item w-80">
                             <a class="nav-link nav-item text-white" href="/show">
-                                <span class="nav-link-text ms-1">获取</span>
+                                <span class="nav-link-text ms-1">爬取</span>
                             </a>
                         </li>
                         <li class="nav-item w-80">
@@ -515,7 +515,6 @@
             method: 'POST',
         }).then(response => response.json())
             .then(data => {
-                console.log(data);
                 if (data.status === 1) {
                     Toast.fire({
                         icon: 'success',
@@ -532,9 +531,9 @@
     }
 </script>
 
+<!-- User Setting -->
 <script>
     const user = localStorage.getItem('user');
-    console.log(user);
     document.getElementById('navbarDropdownMenuLink2').innerText = user;
 </script>
 
