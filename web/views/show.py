@@ -87,10 +87,18 @@ def select():
 @show.route('/api/jobs/export')
 def export():
     """ Get jobs json"""
+
+    root = os.path.abspath('..')
+
+    directory = os.path.join(root, "output/export")
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
     data = None
     CSV_PATH = f'{os.path.abspath("..")}/output/clean/51job.csv'
     SQLITE_PAHT = f'{os.path.abspath("..")}/output/clean/51job.db'
-    EXCEL_PATH = f'{os.path.abspath("..")}/output/clean/51job.xlsx'
+    CSV_EXPORT_PATH = f'{os.path.abspath("..")}/output/export/51job.csv'
+    EXCEL_EXPORT_PATH = f'{os.path.abspath("..")}/output/export/51job.xlsx'
 
     source = request.args.get('source')
     type = request.args.get('type')
@@ -106,11 +114,12 @@ def export():
         data = pd.read_sql(sql, f'sqlite:///{SQLITE_PAHT}')
 
     if type == 'csv':
-        return send_file(CSV_PATH, as_attachment=True)
+        data.to_csv(CSV_EXPORT_PATH)
+        return send_file(CSV_EXPORT_PATH, as_attachment=True)
 
     if type == 'excel':
-        data.to_excel(EXCEL_PATH, index=False)
-        return send_file(EXCEL_PATH, as_attachment=True)
+        data.to_excel(EXCEL_EXPORT_PATH, index=False)
+        return send_file(EXCEL_EXPORT_PATH, as_attachment=True)
 
 
 @show.route('/api/jobs/import')
