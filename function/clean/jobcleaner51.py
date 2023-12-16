@@ -127,12 +127,24 @@ class JobCleaner51(object):
         :Arg:
          - data: origin data
         """
-        data['workYear'] = data['workYear'].str.replace('�于50人', '小于50人')
-        data['workYear'] = data['workYear'].str.replace('500-1000��', '500-1000以上')
-        data['workYear'] = data['workYear'].str.replace('1000-5000��', '1000-5000人')
-        data['workYear'] = data['workYear'].str.replace('10000�以上', '10000人以上')
-        data['workYear'] = data['workYear'].str.replace('150-500�', '150-500人')
-        data['workYear'] = data['workYear'].str.replace('10000人以��', '10000人以上')
+        data['companySize'] = data['companySize'].str.replace('�于50人', '小于50人')
+        data['companySize'] = data['companySize'].str.replace('500-1000��', '500-1000以上')
+        data['companySize'] = data['companySize'].str.replace('1000-5000��', '1000-5000人')
+        data['companySize'] = data['companySize'].str.replace('10000�以上', '10000人以上')
+        data['companySize'] = data['companySize'].str.replace('150-500�', '150-500人')
+        data['companySize'] = data['companySize'].str.replace('10000人以��', '10000人以上')
+        mode_value = data['companySize'].mode()[0]
+        data['companySize'] = data['companySize'].fillna(mode_value)
+        return data
+
+    def __process_companyType(self, data):
+        """ Company type value fill NA
+
+        :Arg:
+         - data: origin data
+        """
+        mode_value = data['companyType'].mode()[0]
+        data['companyType'] = data['companyType'].fillna(mode_value)
         return data
 
     def __process_degree(self, data):
@@ -142,6 +154,17 @@ class JobCleaner51(object):
          - data: origin data
         """
         data['degree'].fillna(data['degree'].mode()[0], inplace=True)
+        return data
+
+    def __process_tags(self, data):
+        """ Remove the first two tags
+
+        :Arg:
+         - data: origin data
+        """
+        data['tags'] = data['tags'].str.split(',', n=2).str[2]
+        mode_value = data['tags'].mode()[0]
+        data['tags'] = data['tags'].fillna(mode_value)
         return data
 
     def __save_to_csv(self, data: pd.DataFrame, output: str):
@@ -161,7 +184,7 @@ class JobCleaner51(object):
         """
 
         connect = sqlite3.connect(output)
-        data.to_sql('51job', connect, if_exists='replace')
+        data.to_sql('job51', connect, if_exists='replace')
         connect.close()
 
     def save(self, data: pd.DataFrame, type: str):
@@ -189,6 +212,8 @@ class JobCleaner51(object):
         data = self.__process_work_year(data)
         data = self.__process_size(data)
         data = self.__process_degree(data)
+        data = self.__process_tags(data)
+        data = self.__process_companyType(data)
         data.drop('salary', axis=1, inplace=True)
         data.drop('issueDate', axis=1, inplace=True)
         return data
