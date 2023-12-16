@@ -4,12 +4,11 @@
 # @Author  : isixe
 # @Version : python3.11.2
 # @Desc    : $END$
-import json
-import math
-import os
 
+import os
+import math
 import pandas as pd
-from flask import Blueprint, render_template, redirect, url_for, session, request, abort
+from flask import Blueprint, render_template, redirect, session, request, send_file, abort
 
 from web.models.result import Result
 
@@ -41,7 +40,7 @@ def main():
 
 
 @show.route('/api/jobs')
-def get():
+def select():
     """ Get jobs json"""
 
     data = None
@@ -82,6 +81,59 @@ def get():
     response.set_message('成功')
     response.set_code(200)
     response.set_data(data)
+    return response.to_json()
+
+
+@show.route('/api/jobs/export')
+def export():
+    """ Get jobs json"""
+    data = None
+    CSV_PATH = f'{os.path.abspath("..")}/output/clean/51job.csv'
+    SQLITE_PAHT = f'{os.path.abspath("..")}/output/clean/51job.db'
+    EXCEL_PATH = f'{os.path.abspath("..")}/output/clean/51job.xlsx'
+
+    source = request.args.get('source')
+    type = request.args.get('type')
+
+    if not source or not type:
+        abort(400, description='参数异常！')
+
+    if source == 'csv':
+        data = pd.read_csv(CSV_PATH)
+
+    if source == 'db':
+        sql = 'SELECT * FROM `job51` ;'
+        data = pd.read_sql(sql, f'sqlite:///{SQLITE_PAHT}')
+
+    if type == 'csv':
+        return send_file(CSV_PATH, as_attachment=True)
+
+    if type == 'excel':
+        data.to_excel(EXCEL_PATH, index=False)
+        return send_file(EXCEL_PATH, as_attachment=True)
+
+
+@show.route('/api/jobs/import')
+def add():
+    """ Add jobs data"""
+
+    # data = None
+    # type = request.args.get('type')
+    #
+    # if type == 'csv':
+    #     data = pd.read_csv('../output/clean/51job.csv')
+    #
+    # if type == 'db':
+    #     sql = 'SELECT * FROM `job51` ;'
+    #     data = pd.read_sql(sql, f'sqlite:///{os.path.abspath("..")}/output/clean/51job.db')
+
+    # url = '/output/clean/51job.xlsx'
+    # data.to_excel(f'{os.path.abspath("..")}{url}', index=False)
+
+    response = Result()
+    response.set_status(1)
+    response.set_message('成功')
+    response.set_code(200)
     return response.to_json()
 
 

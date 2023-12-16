@@ -208,7 +208,41 @@
                     </div>
                     <div class="text-end col-6">
                         <button class="btn btn-outline-primary btn-sm mb-0 me-2">导入</button>
-                        <button class="btn btn-outline-primary btn-sm mb-0">导出</button>
+                        <button class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">导出
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title font-weight-normal" id="exampleModalLabel">
+                                            请选择要导出的文件类型</h5>
+                                        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <select class="form-select ps-2 pe-2 p-1 border-warning text-warning font-weight-bold"
+                                                id="data-type" name="data-type">
+                                            <option value="csv">CSV</option>
+                                            <option value="excel">EXCEL</option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">
+                                            关闭
+                                        </button>
+                                        <button type="button" class="btn bg-gradient-primary" onclick="exportByType()">
+                                            导出
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -513,7 +547,7 @@
             } catch (error) {
                 Toast.fire({
                     icon: 'error',
-                    title: '网络错误，请稍后重试' + error,
+                    title: '网络错误，请稍后重试',
                 });
             }
         };
@@ -618,6 +652,16 @@
 
 
     })();
+</script>
+
+<!-- Data export -->
+<script>
+    const exportByType = async () => {
+        const source = localStorage.getItem('datasource');
+        const type = document.getElementById('data-type').value;
+        const url = `/api/jobs/export?source=${source}&type=${type}`;
+        window.location.href = url;
+    };
 </script>
 
 <!-- Logout request -->
