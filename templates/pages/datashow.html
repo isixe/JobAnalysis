@@ -66,11 +66,11 @@
 
                     <span class="nav-link-text ms-1">数据</span>
                 </a>
-                <div class="collapse" id="showmenu">
+                <div class="uncollapse" id="showmenu">
                     <ul class="navbar-nav ms-5">
                         <li class="nav-item w-80">
                             <a class="nav-link nav-item text-white" href="/show">
-                                <span class="nav-link-text ms-1">获取</span>
+                                <span class="nav-link-text ms-1">爬取</span>
                             </a>
                         </li>
                         <li class="nav-item w-80">
@@ -131,7 +131,7 @@
 <main class="main-content border-radius-lg ">
     <!-- Navbar -->
 
-    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
+    <nav class="navbar navbar-main navbar-expand-lg mx-4 shadow-none border-radius-xl" id="navbarBlur"
          data-scroll="true">
         <div class="container-fluid py-1 px-3">
             <nav aria-label="breadcrumb">
@@ -139,9 +139,10 @@
                 <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                     <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">功能</a>
                     </li>
-                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">主页</li>
+                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">数据</li>
+                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">预览</li>
                 </ol>
-                <h6 class="font-weight-bolder mb-0">主页</h6>
+                <h6 class="font-weight-bolder mb-0">预览</h6>
 
             </nav>
             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
@@ -189,8 +190,103 @@
     <!-- End Navbar -->
 
 
-    <div class="container-fluid py-4">
+    <div class="container-fluid">
+        <div class="row">
 
+            <div class="col-12">
+                <div class="row my-4">
+                    <div class="text-start col-6">
+                        <div class="row">
+                            <div class="col">
+                                <select class="form-select ps-2 pe-2 w-20 p-1 border-primary text-primary font-weight-bold"
+                                        id="data-source" name="data-source">
+                                    <option value="csv">CSV</option>
+                                    <option value="db">SQLite</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-end col-6">
+                        <button class="btn btn-outline-primary btn-sm mb-0 me-2">导入</button>
+                        <button class="btn btn-outline-primary btn-sm mb-0">导出</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card my-2">
+                    <div class="card-body px-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                <tr>
+                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                        Logo
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8 ps-2">
+                                        工作名称
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                        地点
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                        最低薪资
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                        最高薪资
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                        工作年限
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                        学历要求
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                        标签
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                        公司名称
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                        公司类型
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                        规模
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="jobList"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav aria-label="..." class="mt-2">
+            <span class="text-secondary text-xs ms-1 mt-2">总数据量: <span id="total_count">NaN</span></span>
+            <ul class="pagination d-flex justify-content-center">
+                <li class="page-item disabled" id="prev">
+                    <a class="page-link" href="javascript:;" tabindex="-1">
+                    <span class="material-icons">
+                      keyboard_arrow_left
+                    </span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li class="page-item active"><a class="page-link text-white" href="javascript:;">1</a></li>
+                <li class="page-item"><a class="page-link" href="javascript:;">2</a></li>
+                <li class="page-item"><a class="page-link" href="javascript:;">3</a></li>
+                <li class="page-item disabled"><a class="page-link" href="javascript:;">...</a></li>
+                <li class="page-item" id="total"><a class="page-link" href="javascript:;"></a></li>
+                <li class="page-item disabled" id="next">
+                    <a class="page-link" href="javascript:;">
+                        <span class="material-icons">
+                          keyboard_arrow_right
+                        </span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
         <footer class="footer py-4  ">
             <div class="container-fluid">
                 <div class="row align-items-center justify-content-lg-between">
@@ -373,6 +469,157 @@
     })
 </script>
 
+<!-- Data loader -->
+<script>
+    ;(() => {
+        let type = localStorage.getItem('datasource');
+        const datasource = document.getElementById('data-source');
+
+        if (type) {
+            datasource.value = type;
+        } else {
+            datasource.value = 'csv';
+        }
+
+        datasource.addEventListener('change', function () {
+            localStorage.setItem('datasource', datasource.value);
+            window.location.reload();
+        });
+
+        const paramsString = window.location.search
+        const params = new URLSearchParams(paramsString);
+        const pageNum = params.get('pageNum') == null ? '' : params.get('pageNum');
+        const pageSize = params.get('pageSize') == null ? '' : params.get('pageSize')
+
+
+        const fetchData = async () => {
+            try {
+                const url = `/api/jobs?type=${type}&pageNum=${pageNum}&pageSize=${pageSize}`;
+                const response = await fetch(url, {
+                    method: 'GET',
+                });
+                const result = await response.json();
+
+                if (result.status === 1) {
+                    return result.data
+                }
+
+                if (result.status === 0) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: result.message,
+                    });
+                }
+            } catch (error) {
+                Toast.fire({
+                    icon: 'error',
+                    title: '网络错误，请稍后重试' + error,
+                });
+            }
+        };
+
+        fetchData().then(data => {
+            const prevButton = document.querySelector('#prev');
+            const nextButton = document.querySelector('#next');
+
+            if (data.prev) {
+                prevButton.className = 'page-item';
+                document.querySelector('#prev a').setAttribute('href', `/show?pageNum=${data.prev}&pageSize=${data.pageSize}`)
+            }
+
+            if (data.next) {
+                nextButton.className = 'page-item';
+                document.querySelector('#next a').setAttribute('href', `/show?pageNum=${data.next}&pageSize=${data.pageSize}`)
+            }
+
+            const paginationContainer = document.querySelector('.pagination');
+            const pageItems = paginationContainer.querySelectorAll('.page-item:not(#prev):not(#next)');
+            pageItems.forEach(item => item.remove());
+
+            let createPageItem = (className, content) => {
+                const pageItem = document.createElement('li');
+                pageItem.className = 'page-item';
+                pageItem.innerHTML = `<a class="page-link ${className}" href="/show?pageNum=${content}&pageSize=${data.pageSize}">${content}</a>`;
+                return pageItem;
+            }
+
+            const start = data.current - 1;
+            const end = data.current + 2;
+
+            for (let i = start; i <= end; i++) {
+                if (i > 0 && i < data.totalSize + 1) {
+                    let pageItem = createPageItem('', i);
+                    if (i === data.current) {
+                        pageItem = createPageItem('text-white active', i);
+                    }
+                    paginationContainer.insertBefore(pageItem, nextButton);
+                }
+            }
+
+            if (data.current < Math.ceil(data.totalSize / 2)) {
+                const disabledPageItem = createPageItem('disabled', '...');
+                paginationContainer.insertBefore(disabledPageItem, nextButton);
+                const lastPageItem = createPageItem('', data.totalSize);
+                paginationContainer.insertBefore(lastPageItem, nextButton);
+            } else {
+                const firstPageItem = createPageItem('', 1);
+                const disabledPageItem = createPageItem('disabled', '...');
+                paginationContainer.insertBefore(disabledPageItem, prevButton.nextSibling);
+                paginationContainer.insertBefore(firstPageItem, prevButton.nextSibling);
+            }
+
+            document.getElementById('total_count').innerText = data.total;
+
+            joblist = Array.from(data.list);
+            joblist.forEach(item => {
+                let table = document.getElementById('jobList');
+                let data_col = document.createElement('tr');
+                data_col.innerHTML = `<td>
+                                <div class="d-flex px-2 py-1">
+                                    <div>
+                                        <img src="${item.logo}"
+                                             class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                                    </div>
+                                </div>
+                                </td>
+                                <td>
+                                    <p class="text-xs font-weight-bold mb-0">${item.jobName}</p>
+                                </td>
+                                <td class="align-middle">
+                                    <span class="text-secondary text-xs font-weight-bold">${item.area}</span>
+                                </td>
+                                <td class="align-middle text-center ">
+                                    <span class="text-secondary text-xs font-weight-bold">${item.min_salary}</span>
+                                </td>
+                                <td class="align-middle text-center ">
+                                    <span class="text-secondary text-xs font-weight-bold">${item.max_salary}</span>
+                                </td>
+                                <td class="align-middle text-center ">
+                                    <span class="text-secondary text-xs font-weight-bold">${item.workYear}</span>
+                                </td>
+                                <td class="align-middle text-center ">
+                                    <span class="text-secondary text-xs font-weight-bold">${item.degree}</span>
+                                </td>
+                                <td class="align-middle text-start text-sm">
+                                  ${item.tags.split(',').map(tag => `<span class="badge badge-xxs ms-1 bg-gradient-success">${tag}</span>`).join('')}
+                                </td>
+                                <td class="align-middle text-center">
+                                    <span class="text-secondary text-xs font-weight-bold">${item.companyName}</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <span class="text-secondary text-xs font-weight-bold">${item.companyType}</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <span class="text-secondary text-xs font-weight-bold">${item.companySize}</span>
+                                </td>`;
+                table.appendChild(data_col);
+            });
+        });
+
+
+    })();
+</script>
+
 <!-- Logout request -->
 <script>
     const logout = () => {
@@ -380,7 +627,6 @@
             method: 'POST',
         }).then(response => response.json())
             .then(data => {
-                console.log(data);
                 if (data.status === 1) {
                     Toast.fire({
                         icon: 'success',
@@ -397,9 +643,9 @@
     }
 </script>
 
+<!-- User Setting -->
 <script>
     const user = localStorage.getItem('user');
-    console.log(user);
     document.getElementById('navbarDropdownMenuLink2').innerText = user;
 </script>
 
