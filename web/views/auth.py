@@ -157,17 +157,3 @@ def handle_500_error(error):
     response.set_message(error.description)
     response.set_code(500)
     return response.to_json()
-
-
-@auth.errorhandler(501)
-def handle_501_error(error):
-    '''
-    500 error handler
-    :param error: error param
-    :return: request response
-    '''
-    response = Result()
-    response.set_status(0)
-    response.set_message('不支持的请求方法！')
-    response.set_code(501)
-    return response.to_json()
