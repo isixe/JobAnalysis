@@ -245,11 +245,11 @@
             },
             body: JSON.stringify({username: username, password: password})
         }).then(response => response.json())
-            .then(data => {
-                if (data.status === 1) {
+            .then(result => {
+                if (result.status === 1) {
                     Toast.fire({
                         icon: 'success',
-                        title: data.message
+                        title: result.message
                     });
 
                     if (rememberMe) {
@@ -263,8 +263,8 @@
                     window.location.href = window.location.origin;
                 }
 
-                if (data.status === 0) {
-                    showToast(data.message);
+                if (result.status === 0) {
+                    showToast(result.message);
                 }
             }).catch(error => {
             Toast.fire({

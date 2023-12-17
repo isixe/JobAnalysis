@@ -514,11 +514,11 @@
         fetch('/api/logout', {
             method: 'POST',
         }).then(response => response.json())
-            .then(data => {
-                if (data.status === 1) {
+            .then(result => {
+                if (result.status === 1) {
                     Toast.fire({
                         icon: 'success',
-                        title: data.message
+                        title: result.message
                     });
                     window.location.href = window.location.origin;
                 }
