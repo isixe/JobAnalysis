@@ -288,41 +288,41 @@
                 <div class="card my-2">
                     <div class="card-body px-0 pb-2">
                         <div class="table-responsive p-0">
-                            <table class="table align-items-center mb-0">
+                            <table class="table align-items-center mb-0 table-sort" id="jobtable">
                                 <thead>
                                 <tr>
                                     <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
                                         Logo
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8 ps-2">
-                                        工作名称
+                                        工作名称 <i class="fas fa-caret-down"></i>
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        地点
+                                        地点 <i class="fas fa-caret-down"></i>
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        最低薪资
+                                        最低薪资 <i class="fas fa-caret-down"></i>
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        最高薪资
+                                        最高薪资 <i class="fas fa-caret-down"></i>
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        工作年限
+                                        工作年限 <i class="fas fa-caret-down"></i>
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        学历要求
+                                        学历要求 <i class="fas fa-caret-down"></i>
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        标签
+                                        标签 <i class="fas fa-caret-down"></i>
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        公司名称
+                                        公司名称 <i class="fas fa-caret-down"></i>
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        公司类型
+                                        公司类型 <i class="fas fa-caret-down"></i>
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        规模
+                                        规模 <i class="fas fa-caret-down"></i>
                                     </th>
                                 </tr>
                                 </thead>
@@ -515,6 +515,7 @@
 <script src="/static/js/plugins/perfect-scrollbar.min.js"></script>
 <script src="/static/js/plugins/smooth-scrollbar.min.js"></script>
 <script src="/static/js/plugins/sweetalert2@11.js"></script>
+<script src="/static/js/plugins/table-sort.js"></script>
 
 <script>
     var win = navigator.platform.indexOf('Win') > -1;
@@ -525,6 +526,7 @@
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
 </script>
+
 
 <!-- Setting Toast by sweetalert -->
 <script>
@@ -551,6 +553,33 @@
             let params = url.searchParams;
             params.set('keyword', keyword);
             window.location.href = url.toString();
+        }
+    });
+</script>
+
+<!-- Table sort icon -->
+<script>
+    const table = document.getElementById('jobtable');
+    table.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target.tagName === 'TH') {
+            const icons = table.querySelectorAll('th i');
+            icons.forEach(icon => {
+                icon.classList.remove('fa-caret-up');
+                icon.classList.add('fa-caret-down');
+            });
+
+            const icon = target.querySelector('i');
+            if (icon.classList.contains('fa-caret-down')) {
+                icon.classList.remove('fa-caret-down');
+                icon.classList.add('fa-caret-up');
+                return;
+            }
+
+            if (icon.classList.contains('fa-caret-up')) {
+                icon.classList.remove('fa-caret-up');
+                icon.classList.add('fa-caret-down');
+            }
         }
     });
 </script>
