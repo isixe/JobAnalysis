@@ -3,7 +3,7 @@
 # @Time    : 2023/12/13 23:25
 # @Author  : isixe
 # @Version : python3.11.2
-# @Desc    : $END$
+# @Desc    : app starter
 
 from flask import Flask
 
@@ -12,10 +12,13 @@ from web.views.index import index
 from web.views.show import show
 from web.views.predict import predict
 from web.views.analysis import analysis
+from web.views.spider import spider
 
 
 class App(Flask):
     def __init__(self, name):
+        """ Flask init """
+
         super().__init__(name)
         self.static_folder = '../static'
         self.template_folder = '../templates'
@@ -23,11 +26,14 @@ class App(Flask):
         self._register_blueprints()
 
     def _register_blueprints(self):
+        """ add views """
+
         self.register_blueprint(index)
         self.register_blueprint(auth)
         self.register_blueprint(show)
         self.register_blueprint(predict)
         self.register_blueprint(analysis)
+        self.register_blueprint(spider)
 
 
 if __name__ == '__main__':
