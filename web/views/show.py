@@ -7,6 +7,9 @@
 
 import os
 import math
+import sqlite3
+from io import BytesIO
+
 import pandas as pd
 from flask import Blueprint, render_template, redirect, session, request, send_file, abort
 
@@ -114,7 +117,7 @@ def export():
         data = pd.read_sql(sql, f'sqlite:///{SQLITE_PAHT}')
 
     if type == 'csv':
-        data.to_csv(CSV_EXPORT_PATH)
+        data.to_csv(CSV_EXPORT_PATH, index=False)
         return send_file(CSV_EXPORT_PATH, as_attachment=True)
 
     if type == 'excel':
@@ -122,22 +125,52 @@ def export():
         return send_file(EXCEL_EXPORT_PATH, as_attachment=True)
 
 
-@show.route('/api/jobs/import')
+@show.route('/api/jobs/import', methods=["PUT"])
 def add():
     """ Add jobs data"""
+    root = os.path.abspath('..')
+    directory = os.path.join(root, "output/clean")
+    CSV_FILE_PATH = os.path.join(directory, '51job.csv')
+    SQLITE_FILE_PATH = os.path.join(directory, '51job.db')
 
-    # data = None
-    # type = request.args.get('type')
-    #
-    # if type == 'csv':
-    #     data = pd.read_csv('../output/clean/51job.csv')
-    #
-    # if type == 'db':
-    #     sql = 'SELECT * FROM `job51` ;'
-    #     data = pd.read_sql(sql, f'sqlite:///{os.path.abspath("..")}/output/clean/51job.db')
+    data = request.form
+    file_type = data.get('type')
+    file_source = data.get('source')
+    file = request.files['file']
 
-    # url = '/output/clean/51job.xlsx'
-    # data.to_excel(f'{os.path.abspath("..")}{url}', index=False)
+    if file_type not in ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv',
+                         'application/vnd.ms-excel']:
+        abort(500, "不支持的文件类型")
+
+    types = {
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'excel',
+        'application/vnd.ms-excel': 'excel',
+        'text/csv': 'csv',
+    }
+
+    file_type = types[file_type]
+    file_stream = file.stream.read()
+
+    get_data = {
+        'csv': lambda x: pd.read_csv(BytesIO(x)),
+        'excel': lambda x: pd.read_excel(BytesIO(x))
+    }
+
+    data = get_data[file_type](file_stream)
+
+    if file_source == 'csv':
+        data.to_csv(CSV_FILE_PATH, index=False, header=False, mode='a', encoding='utf-8')
+        df = pd.read_csv(CSV_FILE_PATH, delimiter=',')
+        df.drop_duplicates(inplace=True)
+        df.to_csv(CSV_FILE_PATH, index=False, encoding='utf-8')
+
+    if file_source == 'db':
+        connect = sqlite3.connect(SQLITE_FILE_PATH)
+        existing_data = pd.read_sql_query('SELECT * FROM job51', connect)
+        data = pd.concat([existing_data, data])
+        data = data.drop_duplicates()
+        data.to_sql('job51', connect, if_exists='replace', index=False)
+        connect.close()
 
     response = Result()
     response.set_status(1)

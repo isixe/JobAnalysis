@@ -207,19 +207,57 @@
                         </div>
                     </div>
                     <div class="text-end col-6">
-                        <button class="btn btn-outline-primary btn-sm mb-0 me-2">导入</button>
+                        <button class="btn btn-outline-primary btn-sm mb-0 me-2" data-bs-toggle="modal"
+                                data-bs-target="#importModal">导入
+                        </button>
                         <button class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">导出
+                                data-bs-target="#exportModal">导出
                         </button>
 
                         <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="importModal" tabindex="-1" role="dialog"
+                             aria-labelledby="importModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title font-weight-normal" id="exampleModalLabel">
-                                            请选择要导出的文件类型</h5>
+                                        <h5 class="modal-title font-weight-normal" id="importModalLabel">
+                                            请选择导入的文件</h5>
+                                        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row mx-3">
+                                            <input type="file" id="import" name="import"
+                                                   class="mb-2 bg-dark p-2 text-white text-sm border-1 border-radius-md"
+                                                   accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                                                   placeholder="支持csv、excel格式文件">
+                                            <span class="text-secondary text-opacity-50 text-start text-xs">
+                                                <i class="fa fa-volume-down"></i>
+                                                支持csv、excel格式文件
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">
+                                            关闭
+                                        </button>
+                                        <button type="button" class="btn bg-gradient-primary" onclick="fileUpLoad()">
+                                            导入
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="exportModal" tabindex="-1" role="dialog"
+                             aria-labelledby="exportModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title font-weight-normal" id="exportModalLabel">
+                                            请选择导出的文件类型</h5>
                                         <button type="button" class="btn-close text-dark" data-bs-dismiss="modal"
                                                 aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
@@ -513,6 +551,7 @@
             datasource.value = type;
         } else {
             datasource.value = 'csv';
+            type = 'csv';
         }
 
         datasource.addEventListener('change', function () {
@@ -659,8 +698,46 @@
     const exportByType = async () => {
         const source = localStorage.getItem('datasource');
         const type = document.getElementById('data-type').value;
-        const url = `/api/jobs/export?source=${source}&type=${type}`;
-        window.location.href = url;
+        window.location.href = `/api/jobs/export?source=${source}&type=${type}`;
+    };
+</script>
+
+<!-- Data import -->
+<script>
+    const fileUpLoad = () => {
+        const formData = new FormData();
+        const fileField = document.getElementById('import');
+        const source = localStorage.getItem('datasource');
+
+        formData.append("type", fileField.files[0].type);
+        formData.append("file", fileField.files[0]);
+        formData.append('source', source);
+
+        fetch('/api/jobs/import', {
+            method: 'PUT',
+            body: formData,
+        }).then((response) => response.json())
+            .then((result) => {
+                if (result.status === 1) {
+                    Toast.fire({
+                        icon: 'success',
+                        title: "导入成功"
+                    });
+                    window.location.reload();
+                }
+                if (result.status === 0) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: result.message
+                    });
+                }
+            })
+            .catch((error) => {
+                Toast.fire({
+                    icon: 'error',
+                    title: '网络错误，请稍后重试' + error
+                });
+            });
     };
 </script>
 
@@ -670,11 +747,11 @@
         fetch('/api/logout', {
             method: 'POST',
         }).then(response => response.json())
-            .then(data => {
-                if (data.status === 1) {
+            .then(result => {
+                if (result.status === 1) {
                     Toast.fire({
                         icon: 'success',
-                        title: data.message
+                        title: result.message
                     });
                     window.location.href = window.location.origin;
                 }
