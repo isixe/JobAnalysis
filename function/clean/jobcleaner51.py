@@ -174,7 +174,7 @@ class JobCleaner51(object):
          - detail: Dictionary of a single data
          - output: Data output path
         """
-        data.to_csv(output, index=False)
+        data.to_csv(output, index=False, encoding='utf-8')
 
     def __save_to_db(self, data: pd.DataFrame, output: str):
         """ Save data to sqlite
@@ -184,7 +184,7 @@ class JobCleaner51(object):
         """
 
         connect = sqlite3.connect(output)
-        data.to_sql('job51', connect, if_exists='replace')
+        data.to_sql('job51', connect, if_exists='replace',index=False)
         connect.close()
 
     def save(self, data: pd.DataFrame, type: str):
