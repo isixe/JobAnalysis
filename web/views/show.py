@@ -135,6 +135,7 @@ def export():
 @show.route('/api/jobs/import', methods=["PUT"])
 def add():
     """ Add jobs data"""
+
     root = os.path.abspath('..')
     directory = os.path.join(root, "output/clean")
     CSV_FILE_PATH = os.path.join(directory, '51job.csv')
