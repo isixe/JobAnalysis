@@ -138,13 +138,11 @@ def add():
     file_source = data.get('source')
     file = request.files['file']
 
-    if file_type not in ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv',
-                         'application/vnd.ms-excel']:
+    if file_type not in ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv']:
         abort(500, "不支持的文件类型")
 
     types = {
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'excel',
-        'application/vnd.ms-excel': 'excel',
         'text/csv': 'csv',
     }
 
