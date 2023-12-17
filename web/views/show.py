@@ -7,6 +7,7 @@
 
 import os
 import math
+import re
 import sqlite3
 from io import BytesIO
 
@@ -49,6 +50,7 @@ def select():
     data = None
     pageNum = request.args.get('pageNum')
     pageSize = request.args.get('pageSize')
+    keyword = request.args.get('keyword')
     type = request.args.get('type')
 
     pageNum = int(pageNum) if pageNum else 1
@@ -64,6 +66,11 @@ def select():
     if type == 'db':
         sql = 'SELECT * FROM `job51` ;'
         data = pd.read_sql(sql, f'sqlite:///{os.path.abspath("..")}/output/clean/51job.db')
+
+    if keyword:
+        keywords = keyword.split()
+        target = data.astype(str).apply(lambda row: any(re.search(kw, cell) for kw in keywords for cell in row), axis=1)
+        data = data[target]
 
     joblist = data[start_index:end_index].to_dict(orient='records')
     total = len(data)

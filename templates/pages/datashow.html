@@ -149,8 +149,8 @@
                 <div class="ms-md-auto pe-md-3 d-flex align-items-center">
 
                     <div class="input-group input-group-outline">
-                        <label class="form-label">Type here...</label>
-                        <input type="text" class="form-control">
+                        <label class="form-label">输入搜索关键词...</label>
+                        <input type="text" id="search" class="form-control">
                     </div>
 
                 </div>
@@ -541,6 +541,20 @@
     })
 </script>
 
+<!-- Keyword earch -->
+<script>
+    search.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const search = document.getElementById('search');
+            const keyword = search.value;
+            let url = new URL(window.location.href);
+            let params = url.searchParams;
+            params.set('keyword', keyword);
+            window.location.href = url.toString();
+        }
+    });
+</script>
+
 <!-- Data loader -->
 <script>
     ;(() => {
@@ -562,12 +576,12 @@
         const paramsString = window.location.search
         const params = new URLSearchParams(paramsString);
         const pageNum = params.get('pageNum') == null ? '' : params.get('pageNum');
-        const pageSize = params.get('pageSize') == null ? '' : params.get('pageSize')
-
+        const pageSize = params.get('pageSize') == null ? '' : params.get('pageSize');
+        const keyword = params.get('keyword') == null ? '' : params.get('keyword');
 
         const fetchData = async () => {
             try {
-                const url = `/api/jobs?type=${type}&pageNum=${pageNum}&pageSize=${pageSize}`;
+                const url = `/api/jobs?type=${type}&pageNum=${pageNum}&pageSize=${pageSize}&keyword=${keyword}`;
                 const response = await fetch(url, {
                     method: 'GET',
                 });
@@ -595,14 +609,27 @@
             const prevButton = document.querySelector('#prev');
             const nextButton = document.querySelector('#next');
 
+
+            const urlBuilder = (pageNum, pageSize, keyword) => {
+                let baseUrl = window.location.protocol + "//" + window.location.host;
+                let url = new URL(baseUrl + '/show');
+                let params = url.searchParams;
+                params.append('pageNum', pageNum);
+                params.append('pageSize', pageSize);
+                if (keyword) {
+                    params.append('keyword', keyword);
+                }
+                return url.toString();
+            }
+
             if (data.prev) {
                 prevButton.className = 'page-item';
-                document.querySelector('#prev a').setAttribute('href', `/show?pageNum=${data.prev}&pageSize=${data.pageSize}`)
+                document.querySelector('#prev a').setAttribute('href', urlBuilder(data.prev, data.pageSize, keyword));
             }
 
             if (data.next) {
                 nextButton.className = 'page-item';
-                document.querySelector('#next a').setAttribute('href', `/show?pageNum=${data.next}&pageSize=${data.pageSize}`)
+                document.querySelector('#next a').setAttribute('href', urlBuilder(data.next, data.pageSize, keyword));
             }
 
             const paginationContainer = document.querySelector('.pagination');
@@ -612,7 +639,7 @@
             let createPageItem = (className, content) => {
                 const pageItem = document.createElement('li');
                 pageItem.className = 'page-item';
-                pageItem.innerHTML = `<a class="page-link ${className}" href="/show?pageNum=${content}&pageSize=${data.pageSize}">${content}</a>`;
+                pageItem.innerHTML = `<a class="page-link ${className}" href="${urlBuilder(content, data.pageSize, keyword)}">${content}</a>`;
                 return pageItem;
             }
 
