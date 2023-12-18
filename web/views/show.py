@@ -92,47 +92,9 @@ def select():
     return response.to_json()
 
 
-@show.route('/api/jobs/export')
-def export():
-    """ Get jobs json"""
-
-    root = os.path.abspath('..')
-
-    directory = os.path.join(root, "output/export")
-    if not os.path.exists(directory):
-        os.makedirs(directory)
-
-    name = request.args.get('name')
-    type = request.args.get('type')
-    file_source = request.args.get('source')
-
-    if not file_source or not type or name not in ['51job']:
-        abort(400, description='参数异常！')
-
-    CSV_DIRECTORY = f'{os.path.abspath("..")}/output/clean'
-    SQLITE_DIRECTORY = f'{os.path.abspath("..")}/output/clean'
-    CSV_EXPORT_PATH = f'{os.path.abspath("..")}/output/export/51job.csv'
-    EXCEL_EXPORT_PATH = f'{os.path.abspath("..")}/output/export/51job.xlsx'
-
-    data = {
-        'csv': get_data_by_name(name, file_source, CSV_DIRECTORY),
-        'db': get_data_by_name(name, file_source, SQLITE_DIRECTORY),
-    }
-
-    data = data[file_source]
-
-    if type == 'csv':
-        data.to_csv(CSV_EXPORT_PATH, index=False)
-        return send_file(CSV_EXPORT_PATH, as_attachment=True)
-
-    if type == 'excel':
-        data.to_excel(EXCEL_EXPORT_PATH, index=False)
-        return send_file(EXCEL_EXPORT_PATH, as_attachment=True)
-
-
 @show.route('/api/jobs/import', methods=["PUT"])
 def add():
-    """ Add jobs data"""
+    """ Add jobs data """
 
     root = os.path.abspath('..')
     directory = os.path.join(root, "output/clean")
@@ -197,6 +159,73 @@ def add():
     response.set_message('成功')
     response.set_code(200)
     return response.to_json()
+
+
+@show.route('/api/jobs', methods=['DELETE'])
+def delete():
+    """ Add jobs data """
+
+    data = request.get_json()
+    name = data.get('name')
+    source = data.get('source')
+
+    root = os.path.abspath('..')
+    CSV_SOURCE_PATH = os.path.join(root, f'output/clean/{name}.csv')
+    SQLITE_SOURCE_PATH = os.path.join(root, f'output/clean/{name}.db')
+
+    if not (os.path.exists(CSV_SOURCE_PATH) or os.path.exists(SQLITE_SOURCE_PATH)):
+        abort(500, '没有数据可以操作！')
+
+    remove = {
+        'csv': lambda: os.remove(CSV_SOURCE_PATH),
+        'db': lambda: os.remove(SQLITE_SOURCE_PATH)
+    }
+    remove = remove[source]
+    remove()
+
+    response = Result()
+    response.set_status(1)
+    response.set_message('成功')
+    response.set_code(200)
+    return response.to_json()
+
+
+@show.route('/api/jobs/export')
+def export():
+    """ Get jobs json"""
+
+    root = os.path.abspath('..')
+
+    directory = os.path.join(root, "output/export")
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    name = request.args.get('name')
+    type = request.args.get('type')
+    file_source = request.args.get('source')
+
+    if not file_source or not type or name not in ['51job']:
+        abort(400, description='参数异常！')
+
+    CSV_DIRECTORY = f'{os.path.abspath("..")}/output/clean'
+    SQLITE_DIRECTORY = f'{os.path.abspath("..")}/output/clean'
+    CSV_EXPORT_PATH = f'{os.path.abspath("..")}/output/export/51job.csv'
+    EXCEL_EXPORT_PATH = f'{os.path.abspath("..")}/output/export/51job.xlsx'
+
+    data = {
+        'csv': get_data_by_name(name, file_source, CSV_DIRECTORY),
+        'db': get_data_by_name(name, file_source, SQLITE_DIRECTORY),
+    }
+
+    data = data[file_source]
+
+    if type == 'csv':
+        data.to_csv(CSV_EXPORT_PATH, index=False)
+        return send_file(CSV_EXPORT_PATH, as_attachment=True)
+
+    if type == 'excel':
+        data.to_excel(EXCEL_EXPORT_PATH, index=False)
+        return send_file(EXCEL_EXPORT_PATH, as_attachment=True)
 
 
 def get_data_by_name(name: str, dtype: str, directory: str):
