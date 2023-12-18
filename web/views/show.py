@@ -201,7 +201,7 @@ def delete():
 
 @show.route('/api/jobs/export')
 def export():
-    """ Get jobs json"""
+    """ Get jobs json """
 
     root = os.path.abspath('..')
 
