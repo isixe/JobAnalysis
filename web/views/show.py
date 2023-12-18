@@ -261,11 +261,11 @@ def get_data_by_name(name: str, dtype: str, directory: str):
 
 @show.errorhandler(400)
 def handle_400_error(error):
-    '''
-    400 error handler
-    :param error: error param
-    :return: request response
-    '''
+    """ 400 error handler
+
+    :Arg:
+     - error: error param
+    """
     response = Result()
     response.set_status(0)
     response.set_message(error.description)
@@ -275,11 +275,11 @@ def handle_400_error(error):
 
 @show.errorhandler(500)
 def handle_500_error(error):
-    '''
-    500 error handler
-    :param error: error param
-    :return: request response
-    '''
+    """ 500 error handler
+
+    :Arg:
+     - error: error param
+    """
     response = Result()
     response.set_status(0)
     response.set_message(error.description)
