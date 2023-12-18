@@ -139,3 +139,4 @@ def start(save_engine: str):
     spider = AreaSpider51()
     data = spider.get_data_list()
     spider.save(data, save_engine)
+    logger.close()

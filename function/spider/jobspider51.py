@@ -321,3 +321,4 @@ def start(args: dict, save_engine: str):
     spider = JobSipder51(keyword=args['keyword'], page=args['pages'], pageSize=args['pageSize'], area=args['area'])
     data_json = spider.get_data_json()
     spider.save(data_json, save_engine)
+    logger.close()
