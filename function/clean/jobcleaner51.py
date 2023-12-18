@@ -247,3 +247,5 @@ def start(save_engine: str):
     else:
         data = cleaner.process(data[save_engine])
         cleaner.save(data, save_engine)
+
+    logger.close()
