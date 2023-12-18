@@ -70,6 +70,7 @@ def select():
         data = data[target]
 
     joblist = data[start_index:end_index].to_dict(orient='records')
+
     total = len(data)
     totalSize = math.ceil(total / pageSize)
 
@@ -167,7 +168,11 @@ def add():
     data = get_data[file_type](file_stream)
 
     if file_source == 'csv':
-        data.to_csv(CSV_FILE_PATH, index=False, header=False, mode='a', encoding='utf-8')
+        header = False
+        if not os.path.exists(CSV_FILE_PATH):
+            header = True
+
+        data.to_csv(CSV_FILE_PATH, index=False, header=header, mode='a', encoding='utf-8')
         df = pd.read_csv(CSV_FILE_PATH, delimiter=',')
         df.drop_duplicates(inplace=True)
         df.to_csv(CSV_FILE_PATH, index=False, encoding='utf-8')
@@ -176,10 +181,14 @@ def add():
         table = {
             '51job': 'job51'
         }
+
+        if os.path.exists(SQLITE_FILE_PATH):
+            connect = sqlite3.connect(SQLITE_FILE_PATH)
+            existing_data = pd.read_sql_query(f'SELECT * FROM {table[name]}', connect)
+            data = pd.concat([existing_data, data])
+            data = data.drop_duplicates()
+
         connect = sqlite3.connect(SQLITE_FILE_PATH)
-        existing_data = pd.read_sql_query(f'SELECT * FROM {table[name]}', connect)
-        data = pd.concat([existing_data, data])
-        data = data.drop_duplicates()
         data.to_sql(table[name], connect, if_exists='replace', index=False)
         connect.close()
 
