@@ -643,7 +643,7 @@
         };
 
         fetchData().then(data => {
-            if (!data.list){
+            if (!data.list) {
                 return;
             }
             const prevButton = document.querySelector('#prev');
@@ -684,29 +684,51 @@
                 return pageItem;
             }
 
-            const start = data.current - 1;
-            const end = data.current + 2;
-
-            for (let i = start; i <= end; i++) {
-                if (i > 0 && i < data.totalSize + 1) {
+            if (data.totalSize <= 5) {
+                for (let i = 1; i <= data.totalSize; i++) {
                     let pageItem = createPageItem('', i);
+
                     if (i === data.current) {
                         pageItem = createPageItem('text-white active', i);
                     }
+
                     paginationContainer.insertBefore(pageItem, nextButton);
                 }
             }
 
-            if (data.current < Math.ceil(data.totalSize / 2)) {
-                const disabledPageItem = createPageItem('disabled', '...');
-                paginationContainer.insertBefore(disabledPageItem, nextButton);
-                const lastPageItem = createPageItem('', data.totalSize);
-                paginationContainer.insertBefore(lastPageItem, nextButton);
-            } else {
-                const firstPageItem = createPageItem('', 1);
-                const disabledPageItem = createPageItem('disabled', '...');
-                paginationContainer.insertBefore(disabledPageItem, prevButton.nextSibling);
-                paginationContainer.insertBefore(firstPageItem, prevButton.nextSibling);
+            if (data.totalSize > 5) {
+                const start = data.current - 1;
+                const end = data.current + 2;
+
+                for (let i = start; i <= end; i++) {
+                    if (i <= 0) {
+                        return;
+                    }
+                    if (i < data.totalSize + 1) {
+                        let pageItem = createPageItem('', i);
+
+                        if (i === data.current) {
+                            pageItem = createPageItem('text-white active', i);
+                        }
+
+                        paginationContainer.insertBefore(pageItem, nextButton);
+                    }
+                }
+
+
+                if (data.current < Math.ceil(data.totalSize / 2)) {
+                    const disabledPageItem = createPageItem('disabled', '...');
+                    paginationContainer.insertBefore(disabledPageItem, nextButton);
+
+                    const lastPageItem = createPageItem('', data.totalSize);
+                    paginationContainer.insertBefore(lastPageItem, nextButton);
+                } else {
+                    const firstPageItem = createPageItem('', 1);
+                    const disabledPageItem = createPageItem('disabled', '...');
+
+                    paginationContainer.insertBefore(disabledPageItem, prevButton.nextSibling);
+                    paginationContainer.insertBefore(firstPageItem, prevButton.nextSibling);
+                }
             }
 
             document.getElementById('total_count').innerText = data.total;
@@ -803,12 +825,12 @@
                         }, 1500);
                     }
                 })
-            .catch((error) => {
-            Toast.fire({
-                icon: 'error',
-                title: '网络错误，请稍后重试'
-            });
-            });
+                .catch((error) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: '网络错误，请稍后重试'
+                    });
+                });
         });
     };
 </script>
