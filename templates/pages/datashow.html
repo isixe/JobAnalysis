@@ -347,7 +347,7 @@
                 </div>
                 <ul class="pagination d-flex justify-content-center">
                     <li class="page-item disabled" id="prev">
-                        <a class="page-link" href="javascript:;" tabindex="-1">
+                        <a class="page-link" href="javascript:;">
                             <span class="material-icons">
                               keyboard_arrow_left
                             </span>
@@ -596,7 +596,7 @@
     ;(() => {
         let type = localStorage.getItem('datasource');
         const datasource = document.getElementById('data-source');
-        const dataname = document.getElementById('data-name').value;
+        let dataname = localStorage.getItem('dataname') == null ? '51job' : localStorage.getItem('dataname');
 
         if (type) {
             datasource.value = type;
@@ -685,7 +685,7 @@
             }
 
             if (data.totalSize <= 5) {
-                for (let i = 1; i <= data.totalSize; i++) {
+                for (let i = 0; i <= data.totalSize; i++) {
                     let pageItem = createPageItem('', i);
 
                     if (i === data.current) {
@@ -701,10 +701,8 @@
                 const end = data.current + 2;
 
                 for (let i = start; i <= end; i++) {
-                    if (i <= 0) {
-                        break;
-                    }
-                    if (i < data.totalSize + 1) {
+
+                    if (i > 0 && i < data.totalSize + 1) {
                         let pageItem = createPageItem('', i);
 
                         if (i === data.current) {
@@ -794,7 +792,7 @@
             confirmButtonText: '确定',
             cancelButtonText: '取消'
         }).then((result) => {
-            const dataname = document.getElementById('data-name').value;
+            let dataname = localStorage.getItem('dataname') == null ? '51job' : localStorage.getItem('dataname');
             const source = localStorage.getItem('datasource');
 
             fetch('/api/jobs', {
@@ -840,7 +838,7 @@
     const exportByType = async () => {
         const source = localStorage.getItem('datasource');
         const type = document.getElementById('data-type').value;
-        const dataname = document.getElementById('data-name').value;
+        let dataname = localStorage.getItem('dataname') == null ? '51job' : localStorage.getItem('dataname');
         window.location.href = `/api/jobs/export?name=${dataname}&source=${source}&type=${type}`;
     };
 </script>
@@ -851,7 +849,7 @@
         const formData = new FormData();
         const fileField = document.getElementById('import');
         const source = localStorage.getItem('datasource');
-        const dataname = document.getElementById('data-name').value;
+        let dataname = localStorage.getItem('dataname') == null ? '51job' : localStorage.getItem('dataname');
 
         formData.append("name", dataname);
         formData.append("type", fileField.files[0].type);
