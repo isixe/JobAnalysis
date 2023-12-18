@@ -194,14 +194,16 @@
             <div class="col-12">
                 <div class="row my-4">
                     <div class="text-start col-6">
-                        <div class="row">
-                            <div class="col">
-                                <select class="form-select ps-2 pe-2 w-20 p-1 border-primary text-primary font-weight-bold"
-                                        id="data-source" name="data-source">
-                                    <option value="csv">CSV</option>
-                                    <option value="db">SQLite</option>
-                                </select>
-                            </div>
+                        <div class="row ms-2">
+                            <select class="form-select ps-2 pe-2 w-25 p-1 border-primary text-primary font-weight-bold"
+                                    id="data-name" name="data-name">
+                                <option value="51job">前程无忧</option>
+                            </select>
+                            <select class="form-select ps-2 pe-2 ms-2 w-20 p-1 border-primary text-primary font-weight-bold"
+                                    id="data-source" name="data-source">
+                                <option value="csv">CSV</option>
+                                <option value="db">SQLite</option>
+                            </select>
                         </div>
                     </div>
                     <div class="text-end col-6">
@@ -561,14 +563,14 @@
     table.addEventListener('click', (e) => {
         const target = e.target;
         if (target.tagName === 'TH') {
-            const icons = table.querySelectorAll('th i');
-            icons.forEach(icon => {
-                icon.classList.remove('fa-caret-up');
-                icon.classList.add('fa-caret-down');
-            });
-
             const icon = target.querySelector('i');
+            const icons = table.querySelectorAll('th i');
+
             if (icon.classList.contains('fa-caret-down')) {
+                icons.forEach(icon => {
+                    icon.classList.remove('fa-caret-up');
+                    icon.classList.add('fa-caret-down');
+                });
                 icon.classList.remove('fa-caret-down');
                 icon.classList.add('fa-caret-up');
                 return;
@@ -587,6 +589,7 @@
     ;(() => {
         let type = localStorage.getItem('datasource');
         const datasource = document.getElementById('data-source');
+        const dataname = document.getElementById('data-name').value;
 
         if (type) {
             datasource.value = type;
@@ -608,7 +611,7 @@
 
         const fetchData = async () => {
             try {
-                const url = `/api/jobs?type=${type}&pageNum=${pageNum}&pageSize=${pageSize}&keyword=${keyword}`;
+                const url = `/api/jobs?name=${dataname}&type=${type}&pageNum=${pageNum}&pageSize=${pageSize}&keyword=${keyword}`;
                 const response = await fetch(url, {
                     method: 'GET',
                 });
@@ -641,6 +644,7 @@
                 let baseUrl = window.location.protocol + "//" + window.location.host;
                 let url = new URL(baseUrl + '/show');
                 let params = url.searchParams;
+                params.append('name', dataname);
                 params.append('pageNum', pageNum);
                 params.append('pageSize', pageSize);
                 if (keyword) {
@@ -750,7 +754,8 @@
     const exportByType = async () => {
         const source = localStorage.getItem('datasource');
         const type = document.getElementById('data-type').value;
-        window.location.href = `/api/jobs/export?source=${source}&type=${type}`;
+        const dataname = document.getElementById('data-name').value;
+        window.location.href = `/api/jobs/export?name=${dataname}&source=${source}&type=${type}`;
     };
 </script>
 
@@ -760,7 +765,9 @@
         const formData = new FormData();
         const fileField = document.getElementById('import');
         const source = localStorage.getItem('datasource');
+        const dataname = document.getElementById('data-name').value;
 
+        formData.append("name", dataname);
         formData.append("type", fileField.files[0].type);
         formData.append("file", fileField.files[0]);
         formData.append('source', source);

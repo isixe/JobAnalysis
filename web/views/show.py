@@ -43,9 +43,9 @@ def main():
 
 @show.route('/api/jobs')
 def select():
-    """ Get jobs json"""
+    """ Get jobs json """
 
-    data = None
+    name = request.args.get('name')
     pageNum = request.args.get('pageNum')
     pageSize = request.args.get('pageSize')
     keyword = request.args.get('keyword')
@@ -58,12 +58,11 @@ def select():
     start_index = (pageNum - 1) * pageSize
     end_index = start_index + pageSize
 
-    if dtype == 'csv':
-        data = pd.read_csv('../output/clean/51job.csv')
+    if name not in ['51job']:
+        abort(400, description='参数异常！')
 
-    if dtype == 'db':
-        sql = 'SELECT * FROM `job51` ;'
-        data = pd.read_sql(sql, f'sqlite:///{os.path.abspath("..")}/output/clean/51job.db')
+    path = f'{os.path.abspath("..")}/output/clean'
+    data = get_data_by_name(name, dtype, path)
 
     if keyword:
         keywords = keyword.split()
@@ -102,24 +101,24 @@ def export():
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-    data = None
-    CSV_PATH = f'{os.path.abspath("..")}/output/clean/51job.csv'
-    SQLITE_PAHT = f'{os.path.abspath("..")}/output/clean/51job.db'
+    name = request.args.get('name')
+    type = request.args.get('type')
+    file_source = request.args.get('source')
+
+    if not file_source or not type or name not in ['51job']:
+        abort(400, description='参数异常！')
+
+    CSV_DIRECTORY = f'{os.path.abspath("..")}/output/clean'
+    SQLITE_DIRECTORY = f'{os.path.abspath("..")}/output/clean'
     CSV_EXPORT_PATH = f'{os.path.abspath("..")}/output/export/51job.csv'
     EXCEL_EXPORT_PATH = f'{os.path.abspath("..")}/output/export/51job.xlsx'
 
-    source = request.args.get('source')
-    type = request.args.get('type')
+    data = {
+        'csv': get_data_by_name(name, file_source, CSV_DIRECTORY),
+        'db': get_data_by_name(name, file_source, SQLITE_DIRECTORY),
+    }
 
-    if not source or not type:
-        abort(400, description='参数异常！')
-
-    if source == 'csv':
-        data = pd.read_csv(CSV_PATH)
-
-    if source == 'db':
-        sql = 'SELECT * FROM `job51` ;'
-        data = pd.read_sql(sql, f'sqlite:///{SQLITE_PAHT}')
+    data = data[file_source]
 
     if type == 'csv':
         data.to_csv(CSV_EXPORT_PATH, index=False)
@@ -136,16 +135,21 @@ def add():
 
     root = os.path.abspath('..')
     directory = os.path.join(root, "output/clean")
-    CSV_FILE_PATH = os.path.join(directory, '51job.csv')
-    SQLITE_FILE_PATH = os.path.join(directory, '51job.db')
 
     data = request.form
+    name = data.get('name')
+    file = request.files['file']
     file_type = data.get('type')
     file_source = data.get('source')
-    file = request.files['file']
+
+    if name not in ['51job']:
+        abort(400, description='参数异常！')
+
+    CSV_FILE_PATH = os.path.join(directory, f'{name}.csv')
+    SQLITE_FILE_PATH = os.path.join(directory, f'{name}.db')
 
     if file_type not in ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv']:
-        abort(500, "不支持的文件类型")
+        abort(500, "不支持的文件类型！")
 
     types = {
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'excel',
@@ -169,11 +173,14 @@ def add():
         df.to_csv(CSV_FILE_PATH, index=False, encoding='utf-8')
 
     if file_source == 'db':
+        table = {
+            '51job': 'job51'
+        }
         connect = sqlite3.connect(SQLITE_FILE_PATH)
-        existing_data = pd.read_sql_query('SELECT * FROM job51', connect)
+        existing_data = pd.read_sql_query(f'SELECT * FROM {table[name]}', connect)
         data = pd.concat([existing_data, data])
         data = data.drop_duplicates()
-        data.to_sql('job51', connect, if_exists='replace', index=False)
+        data.to_sql(table[name], connect, if_exists='replace', index=False)
         connect.close()
 
     response = Result()
@@ -181,6 +188,28 @@ def add():
     response.set_message('成功')
     response.set_code(200)
     return response.to_json()
+
+
+def get_data_by_name(name: str, dtype: str, directory: str):
+    """ Get job data by job name
+
+    :Arg:
+     - name: job name
+     - dtype: data source name
+     - directory: data directory
+    """
+    data = None
+    if dtype == 'csv':
+        data = pd.read_csv(f'{directory}/{name}.csv')
+
+    if dtype == 'db':
+        table = {
+            '51job': 'job51'
+        }
+        sql = f'SELECT * FROM {table[name]} ;'
+        data = pd.read_sql(sql, f'sqlite:///{directory}/{name}.db')
+
+    return data
 
 
 @show.errorhandler(400)
