@@ -225,7 +225,10 @@
                         icon: 'success',
                         title: result.message
                     });
-                    window.location.href = window.location.origin + '/login';
+
+                    setTimeout(() => {
+                        window.location.href = window.location.origin + '/login';
+                    }, 1500);
                 }
 
                 if (result.status === 0) {

@@ -260,7 +260,10 @@
                         localStorage.removeItem('savedPassword');
                     }
                     localStorage.setItem('user', username);
-                    window.location.href = window.location.origin;
+
+                    setTimeout(() => {
+                        window.location.href = window.location.origin;
+                    }, 1500);
                 }
 
                 if (result.status === 0) {

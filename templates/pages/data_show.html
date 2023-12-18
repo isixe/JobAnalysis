@@ -625,7 +625,7 @@
                 const result = await response.json();
 
                 if (result.status === 1) {
-                    return result.data
+                    return result.data;
                 }
 
                 if (result.status === 0) {
@@ -870,7 +870,9 @@
                         icon: 'success',
                         title: "导入成功"
                     });
-                    window.location.reload();
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
                 }
                 if (result.status === 0) {
                     Toast.fire({
@@ -938,7 +940,9 @@
                         icon: 'success',
                         title: result.message
                     });
-                    window.location.href = window.location.origin;
+                    setTimeout(() => {
+                        window.location.href = window.location.origin;
+                    }, 1500);
                 }
             }).catch(error => {
             Toast.fire({

@@ -188,7 +188,7 @@
 
     <!-- End Navbar -->
 
-    <div class="container-fluid py-4">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12">
                 <div class="row my-4">
@@ -972,7 +972,10 @@
                         icon: 'success',
                         title: "导入成功"
                     });
-                    window.location.reload();
+
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 1500);
                 }
                 if (result.status === 0) {
                     Toast.fire({
@@ -1007,7 +1010,6 @@
             if (result.isDismissed) {
                 return;
             }
-
 
             let dataname = localStorage.getItem('dataname') == null ? '51job' : localStorage.getItem('dataname');
             const source = localStorage.getItem('datasource');
@@ -1100,7 +1102,9 @@
                         icon: 'success',
                         title: result.message
                     });
-                    window.location.href = window.location.origin;
+                    setTimeout(() => {
+                        window.location.href = window.location.origin;
+                    }, 1500);
                 }
             }).catch(error => {
             Toast.fire({
