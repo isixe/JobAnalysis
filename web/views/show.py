@@ -45,6 +45,11 @@ def main():
 def select():
     """ Get jobs json """
 
+    response = Result()
+    response.set_status(1)
+    response.set_message('成功')
+    response.set_code(200)
+
     name = request.args.get('name')
     pageNum = request.args.get('pageNum')
     pageSize = request.args.get('pageSize')
@@ -61,8 +66,11 @@ def select():
     if name not in ['51job']:
         abort(400, description='参数异常！')
 
-    path = f'{os.path.abspath("..")}/output/clean'
-    data = get_data_by_name(name, dtype, path)
+    directory = f'{os.path.abspath("..")}/output/clean'
+    data = get_data_by_name(name, dtype, directory)
+
+    if data.empty:
+        return response.to_json()
 
     if keyword:
         keywords = keyword.split()
@@ -84,10 +92,6 @@ def select():
         'next': pageNum + 1 if pageNum < totalSize else None
     }
 
-    response = Result()
-    response.set_status(1)
-    response.set_message('成功')
-    response.set_code(200)
     response.set_data(data)
     return response.to_json()
 
@@ -197,6 +201,7 @@ def export():
     root = os.path.abspath('..')
 
     directory = os.path.join(root, "output/export")
+
     if not os.path.exists(directory):
         os.makedirs(directory)
 
@@ -237,6 +242,10 @@ def get_data_by_name(name: str, dtype: str, directory: str):
      - directory: data directory
     """
     data = None
+
+    if not os.path.exists(f'{directory}/{name}.{dtype}'):
+        return pd.DataFrame([])
+
     if dtype == 'csv':
         data = pd.read_csv(f'{directory}/{name}.csv')
 

@@ -643,6 +643,9 @@
         };
 
         fetchData().then(data => {
+            if (!data.list){
+                return;
+            }
             const prevButton = document.querySelector('#prev');
             const nextButton = document.querySelector('#next');
 
