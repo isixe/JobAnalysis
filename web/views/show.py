@@ -177,7 +177,12 @@ def delete():
     CSV_SOURCE_PATH = os.path.join(root, f'output/clean/{name}.csv')
     SQLITE_SOURCE_PATH = os.path.join(root, f'output/clean/{name}.db')
 
-    if not (os.path.exists(CSV_SOURCE_PATH) and os.path.exists(SQLITE_SOURCE_PATH)):
+    flag = {
+        'csv': os.path.exists(CSV_SOURCE_PATH),
+        'db': os.path.exists(SQLITE_SOURCE_PATH)
+    }
+
+    if not flag[source]:
         abort(500, '没有数据可以操作！')
 
     remove = {
