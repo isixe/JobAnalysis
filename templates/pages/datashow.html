@@ -796,6 +796,42 @@
     };
 </script>
 
+<!--Touch table to scroll -->
+<script type="text/javascript">
+    let timeCount = 0;
+    let gapX = 0;
+    let startX = 0;
+    let controller;
+
+    const el_table = document.getElementById('jobtable').parentNode;
+    el_table.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+
+        timeCount = setTimeout(function () {
+            timeCount = 0;
+            el_table.style.cursor = 'grab';
+            gapX = e.clientX;
+            startX = el_table.scrollWidth;
+
+            controller = new AbortController();
+            const {signal} = controller;
+
+            el_table.addEventListener('mousemove', (e) => {
+                const x = e.clientX - gapX;
+                el_table.scrollLeft -= x / 10;
+                return false;
+            }, {signal});
+        }, 300);
+    });
+
+    document.addEventListener('mouseup', () => {
+        clearTimeout(timeCount);
+        timeCount = 0;
+        el_table.style.cursor = 'auto';
+        controller.abort();
+    });
+</script>
+
 <!-- Logout request -->
 <script>
     const logout = () => {
