@@ -792,6 +792,11 @@
             confirmButtonText: '确定',
             cancelButtonText: '取消'
         }).then((result) => {
+
+            if (result.isDismissed) {
+                return;
+            }
+
             let dataname = localStorage.getItem('dataname') == null ? '51job' : localStorage.getItem('dataname');
             const source = localStorage.getItem('datasource');
 
