@@ -36,7 +36,7 @@ def login_required(view_func):
 def sign_in():
     """ Return login page """
 
-    return render_template('pages/sign-in.html')
+    return render_template('pages/sign_in.html')
 
 
 @auth.route('/register')
@@ -44,7 +44,7 @@ def sign_in():
 def sign_up():
     """ Return register page """
 
-    return render_template('pages/sign-up.html')
+    return render_template('pages/sign_up.html')
 
 
 @auth.route('/api/login', methods=["POST"])
