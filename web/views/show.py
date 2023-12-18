@@ -9,12 +9,10 @@ import os
 import math
 import re
 import sqlite3
-from io import BytesIO
-
 import pandas as pd
-from flask import Blueprint, render_template, redirect, session, request, send_file, abort
-
+from io import BytesIO
 from web.models.result import Result
+from flask import Blueprint, render_template, redirect, session, request, send_file, abort
 
 show = Blueprint('show', __name__)
 
@@ -51,7 +49,7 @@ def select():
     pageNum = request.args.get('pageNum')
     pageSize = request.args.get('pageSize')
     keyword = request.args.get('keyword')
-    type = request.args.get('type')
+    dtype = request.args.get('type')
 
     pageNum = int(pageNum) if pageNum else 1
     pageNum = pageNum if pageNum != 0 else 1
@@ -60,10 +58,10 @@ def select():
     start_index = (pageNum - 1) * pageSize
     end_index = start_index + pageSize
 
-    if type == 'csv':
+    if dtype == 'csv':
         data = pd.read_csv('../output/clean/51job.csv')
 
-    if type == 'db':
+    if dtype == 'db':
         sql = 'SELECT * FROM `job51` ;'
         data = pd.read_sql(sql, f'sqlite:///{os.path.abspath("..")}/output/clean/51job.db')
 
