@@ -809,6 +809,10 @@
                             '数据已经删除，即将刷新',
                             'success'
                         );
+
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
                     }
                     if (result.status === 0) {
                         Swal.fire(
@@ -816,11 +820,6 @@
                             '数据未删除，即将刷新',
                             'error'
                         );
-
-                        setTimeout(() => {
-                            // window.location.reload();
-
-                        }, 1500);
                     }
                 })
                 .catch((error) => {
