@@ -38,7 +38,7 @@ def login_required(view_func):
 def main():
     """ home page """
 
-    return render_template('pages/datashow.html')
+    return render_template('pages/data_show.html')
 
 
 @show.route('/api/jobs')
