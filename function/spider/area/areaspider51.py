@@ -53,7 +53,6 @@ class AreaSpider51(object):
 
         pattern = r'{k:"(.*?)",v:"(.*?)"}'
         areaTupleList = re.findall(pattern, areaList)
-        areaTupleList.pop(0)
         return areaTupleList
 
     @staticmethod
