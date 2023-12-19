@@ -186,215 +186,222 @@
     <!-- End Navbar -->
 
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="row my-4">
-                    <div class="text-start col-6">
-                        <div class="row ms-2">
-                            <select class="form-select ps-2 pe-2 w-25 p-1 border-primary text-primary font-weight-bold"
-                                    id="data-name" name="data-name">
-                                <option value="51job">前程无忧</option>
-                            </select>
-                            <select class="form-select ps-2 pe-2 ms-2 w-20 p-1 border-primary text-primary font-weight-bold"
-                                    id="data-source" name="data-source">
-                                <option value="csv">CSV</option>
-                                <option value="db">SQLite</option>
-                            </select>
+        <div class="main-content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row my-4">
+                        <div class="text-start col-6">
+                            <div class="row ms-2">
+                                <select class="form-select ps-2 pe-2 w-25 p-1 border-primary text-primary font-weight-bold"
+                                        id="data-name" name="data-name">
+                                    <option value="51job">前程无忧</option>
+                                </select>
+                                <select class="form-select ps-2 pe-2 ms-2 w-20 p-1 border-primary text-primary font-weight-bold"
+                                        id="data-source" name="data-source">
+                                    <option value="csv">CSV</option>
+                                    <option value="db">SQLite</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="text-end col-6">
-                        <button class="btn btn-outline-primary btn-sm mb-0 me-2" data-bs-toggle="modal"
-                                data-bs-target="#importModal">导入
-                        </button>
-                        <button class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
-                                data-bs-target="#exportModal">导出
-                        </button>
+                        <div class="text-end col-6">
+                            <button class="btn btn-outline-primary btn-sm mb-0 me-2" data-bs-toggle="modal"
+                                    data-bs-target="#importModal">导入
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
+                                    data-bs-target="#exportModal">导出
+                            </button>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="importModal" tabindex="-1" role="dialog"
-                             aria-labelledby="importModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title font-weight-normal" id="importModalLabel">
-                                            请选择导入的文件</h5>
-                                        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal"
-                                                aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row mx-3">
-                                            <input type="file" id="import" name="import"
-                                                   class="mb-2 bg-dark p-2 text-white text-sm border-1 border-radius-md"
-                                                   accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                                                   placeholder="支持csv、excel格式文件">
-                                            <span class="text-secondary text-opacity-50 text-start text-xs">
+                            <!-- Modal -->
+                            <div class="modal fade" id="importModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="importModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title font-weight-normal" id="importModalLabel">
+                                                请选择导入的文件</h5>
+                                            <button type="button" class="btn-close text-dark" data-bs-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row mx-3">
+                                                <input type="file" id="import" name="import"
+                                                       class="mb-2 bg-dark p-2 text-white text-sm border-1 border-radius-md"
+                                                       accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                                       placeholder="支持csv、excel格式文件">
+                                                <span class="text-secondary text-opacity-50 text-start text-xs">
                                                 <i class="fa fa-volume-down"></i>
                                                 支持csv、excel格式文件
                                             </span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn bg-gradient-secondary"
+                                                    data-bs-dismiss="modal">
+                                                关闭
+                                            </button>
+                                            <button type="button" class="btn bg-gradient-primary"
+                                                    onclick="fileUpLoad()">
+                                                导入
+                                            </button>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">
-                                            关闭
-                                        </button>
-                                        <button type="button" class="btn bg-gradient-primary" onclick="fileUpLoad()">
-                                            导入
-                                        </button>
-                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="modal fade" id="exportModal" tabindex="-1" role="dialog"
-                             aria-labelledby="exportModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title font-weight-normal" id="exportModalLabel">
-                                            请选择导出的文件类型</h5>
-                                        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal"
-                                                aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <select class="form-select ps-2 pe-2 p-1 border-warning text-warning font-weight-bold"
-                                                id="data-type" name="data-type">
-                                            <option value="csv">CSV</option>
-                                            <option value="excel">EXCEL</option>
-                                        </select>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">
-                                            关闭
-                                        </button>
-                                        <button type="button" class="btn bg-gradient-primary" onclick="exportByType()">
-                                            导出
-                                        </button>
+                            <div class="modal fade" id="exportModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="exportModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title font-weight-normal" id="exportModalLabel">
+                                                请选择导出的文件类型</h5>
+                                            <button type="button" class="btn-close text-dark" data-bs-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <select class="form-select ps-2 pe-2 p-1 border-warning text-warning font-weight-bold"
+                                                    id="data-type" name="data-type">
+                                                <option value="csv">CSV</option>
+                                                <option value="excel">EXCEL</option>
+                                            </select>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn bg-gradient-secondary"
+                                                    data-bs-dismiss="modal">
+                                                关闭
+                                            </button>
+                                            <button type="button" class="btn bg-gradient-primary"
+                                                    onclick="exportByType()">
+                                                导出
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-12">
-                <div class="card my-2">
-                    <div class="card-body px-0 pb-2">
-                        <div class="table-responsive p-0">
-                            <table class="table align-items-center mb-0 table-sort" id="jobtable">
-                                <thead>
-                                <tr>
-                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        Logo
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8 ps-2">
-                                        工作名称 <i class="fas fa-caret-down"></i>
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        地点 <i class="fas fa-caret-down"></i>
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        最低薪资 <i class="fas fa-caret-down"></i>
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        最高薪资 <i class="fas fa-caret-down"></i>
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        工作年限 <i class="fas fa-caret-down"></i>
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        学历要求 <i class="fas fa-caret-down"></i>
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        标签 <i class="fas fa-caret-down"></i>
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        公司名称 <i class="fas fa-caret-down"></i>
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        公司类型 <i class="fas fa-caret-down"></i>
-                                    </th>
-                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
-                                        规模 <i class="fas fa-caret-down"></i>
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody id="jobList"></tbody>
-                            </table>
+                <div class="col-12">
+                    <div class="card my-2">
+                        <div class="card-body px-0 pb-2">
+                            <div class="table-responsive p-0">
+                                <table class="table align-items-center mb-0 table-sort" id="jobtable">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                            Logo
+                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8 ps-2">
+                                            工作名称 <i class="fas fa-caret-down"></i>
+                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                            地点 <i class="fas fa-caret-down"></i>
+                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                            最低薪资 <i class="fas fa-caret-down"></i>
+                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                            最高薪资 <i class="fas fa-caret-down"></i>
+                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                            工作年限 <i class="fas fa-caret-down"></i>
+                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                            学历要求 <i class="fas fa-caret-down"></i>
+                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                            标签 <i class="fas fa-caret-down"></i>
+                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                            公司名称 <i class="fas fa-caret-down"></i>
+                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                            公司类型 <i class="fas fa-caret-down"></i>
+                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-8">
+                                            规模 <i class="fas fa-caret-down"></i>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="jobList"></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <span class="text-secondary text-xs ms-1 mt-2">总数据量: <span id="total_count">NaN</span></span>
+            <div class="row">
+                <div class="col-6">
+                    <span class="text-secondary text-xs ms-1 mt-2">总数据量: <span id="total_count">NaN</span></span>
 
-            </div>
-            <div class="col-6">
-                <button class="btn btn-outline-primary btn-sm mb-0 me-2 position-absolute end-1"
-                        onclick="dataDelete()">
-                    清空
-                </button>
-            </div>
-            <ul class="pagination d-flex justify-content-center">
-                <li class="page-item disabled" id="prev">
-                    <a class="page-link" href="javascript:;">
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-outline-primary btn-sm mb-0 me-2 position-absolute end-1"
+                            onclick="dataDelete()">
+                        清空
+                    </button>
+                </div>
+                <ul class="pagination d-flex justify-content-center">
+                    <li class="page-item disabled" id="prev">
+                        <a class="page-link" href="javascript:;">
                             <span class="material-icons">
                               keyboard_arrow_left
                             </span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <li class="page-item active"><a class="page-link text-white" href="javascript:;">1</a></li>
-                <li class="page-item disabled" id="next">
-                    <a class="page-link" href="javascript:;">
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item active"><a class="page-link text-white" href="javascript:;">1</a></li>
+                    <li class="page-item disabled" id="next">
+                        <a class="page-link" href="javascript:;">
                         <span class="material-icons">
                           keyboard_arrow_right
                         </span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <footer class="footer py-4  ">
-            <div class="container-fluid">
-                <div class="row align-items-center justify-content-lg-between">
-                    <div class="col-lg-6 mb-lg-0 mb-4">
-                        <div class="copyright text-center text-sm text-muted text-lg-start">
-                            ©
-                            <script>
-                                document.write(new Date().getFullYear())
-                            </script>
-                            ,
-                            made with <i class="fa fa-heart"></i> by
-                            <a href="https://github.com/isixe" class="font-weight-bold text-black-50"
-                               target="_blank">isixe</a>
-                            for a better job analysis.
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                            <li class="nav-item">
-                                <a href="https://github.com/isixe" class="nav-link text-black-50"
-                                   target="_blank">isixe</a>
-                            </li>
-                            <!--                            <li class="nav-item">-->
-                            <!--                                <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>-->
-                            <!--                            </li>-->
-                            <li class="nav-item">
-                                <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
-                                   target="_blank">License</a>
-                            </li>
-                        </ul>
+    </div>
+
+    <footer class="footer py-4  ">
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-lg-between">
+                <div class="col-lg-6 mb-lg-0 mb-4">
+                    <div class="copyright text-center text-sm text-muted text-lg-start">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>
+                        ,
+                        made with <i class="fa fa-heart"></i> by
+                        <a href="https://github.com/isixe" class="font-weight-bold text-black-50"
+                           target="_blank">isixe</a>
+                        for a better job analysis.
                     </div>
                 </div>
+                <div class="col-lg-6">
+                    <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                        <li class="nav-item">
+                            <a href="https://github.com/isixe" class="nav-link text-black-50"
+                               target="_blank">isixe</a>
+                        </li>
+                        <!--                            <li class="nav-item">-->
+                        <!--                                <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>-->
+                        <!--                            </li>-->
+                        <li class="nav-item">
+                            <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
+                               target="_blank">License</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </footer>
-    </div>
+        </div>
+    </footer>
 
 </main>
 
