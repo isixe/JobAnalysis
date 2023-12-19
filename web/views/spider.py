@@ -139,6 +139,8 @@ def select():
         target = data.astype(str).apply(lambda row: any(re.search(kw, cell) for kw in keywords for cell in row), axis=1)
         data = data[target]
 
+    data.fillna('')
+
     joblist = data[start_index:end_index].to_dict(orient='records')
 
     total = len(data)
@@ -194,8 +196,6 @@ def add():
     }
 
     data = get_data[file_type](file_stream)
-
-    data = data.fillna('')
 
     if file_source == 'csv':
         header = False
