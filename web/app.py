@@ -8,6 +8,7 @@
 from flask import Flask
 
 from web.views.auth import auth
+from web.views.clean import clean
 from web.views.index import index
 from web.views.show import show
 from web.views.predict import predict
@@ -34,6 +35,7 @@ class App(Flask):
         self.register_blueprint(predict)
         self.register_blueprint(analysis)
         self.register_blueprint(spider)
+        self.register_blueprint(clean)
 
 
 if __name__ == '__main__':
