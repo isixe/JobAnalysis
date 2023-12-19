@@ -751,9 +751,8 @@
                     method: 'GET',
                 });
                 const result = await response.json();
-
                 if (result.status === 1) {
-                    return result.data
+                    return result.data;
                 }
 
                 if (result.status === 0) {
@@ -1071,7 +1070,7 @@
                 el_table.scrollLeft -= x / 10;
                 return false;
             }, {signal});
-        }, 300);
+        }, 500);
     });
 
     document.addEventListener('mouseup', () => {
