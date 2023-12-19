@@ -552,43 +552,47 @@
 
 <!-- Keyword earch -->
 <script>
-    search.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            const search = document.getElementById('search');
-            const keyword = search.value;
-            let url = new URL(window.location.href);
-            let params = url.searchParams;
-            params.set('keyword', keyword);
-            window.location.href = url.toString();
-        }
-    });
+    ;(() => {
+        document.getElementById('search').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const search = document.getElementById('search');
+                const keyword = search.value;
+                let url = new URL(window.location.href);
+                let params = url.searchParams;
+                params.set('keyword', keyword);
+                window.location.href = url.toString();
+            }
+        });
+    })();
 </script>
 
 <!-- Table sort icon -->
 <script>
-    const table = document.getElementById('jobtable');
-    table.addEventListener('click', (e) => {
-        const target = e.target;
-        if (target.tagName === 'TH') {
-            const icon = target.querySelector('i');
-            const icons = table.querySelectorAll('th i');
+    ;(() => {
+        const table = document.getElementById('jobtable');
+        table.addEventListener('click', (e) => {
+            const target = e.target;
+            if (target.tagName === 'TH') {
+                const icon = target.querySelector('i');
+                const icons = table.querySelectorAll('th i');
 
-            if (icon.classList.contains('fa-caret-down')) {
-                icons.forEach(icon => {
+                if (icon.classList.contains('fa-caret-down')) {
+                    icons.forEach(icon => {
+                        icon.classList.remove('fa-caret-up');
+                        icon.classList.add('fa-caret-down');
+                    });
+                    icon.classList.remove('fa-caret-down');
+                    icon.classList.add('fa-caret-up');
+                    return;
+                }
+
+                if (icon.classList.contains('fa-caret-up')) {
                     icon.classList.remove('fa-caret-up');
                     icon.classList.add('fa-caret-down');
-                });
-                icon.classList.remove('fa-caret-down');
-                icon.classList.add('fa-caret-up');
-                return;
+                }
             }
-
-            if (icon.classList.contains('fa-caret-up')) {
-                icon.classList.remove('fa-caret-up');
-                icon.classList.add('fa-caret-down');
-            }
-        }
-    });
+        });
+    })();
 </script>
 
 <!-- Data loader -->
@@ -892,40 +896,42 @@
 
 <!--Touch table to scroll -->
 <script type="text/javascript">
-    let timeCount = 0;
-    let gapX = 0;
-    let startX = 0;
-    let controller;
+    ;(() => {
+        let timeCount = 0;
+        let gapX = 0;
+        let startX = 0;
+        let controller;
 
-    const el_table = document.getElementById('jobtable').parentNode;
-    el_table.addEventListener('mousedown', (e) => {
-        e.preventDefault();
+        const el_table = document.getElementById('jobtable').parentNode;
+        el_table.addEventListener('mousedown', (e) => {
+            e.preventDefault();
 
-        timeCount = setTimeout(() => {
+            timeCount = setTimeout(() => {
+                timeCount = 0;
+                el_table.style.cursor = 'grab';
+                gapX = e.clientX;
+                startX = el_table.scrollWidth;
+
+                controller = new AbortController();
+                const {signal} = controller;
+
+                el_table.addEventListener('mousemove', (e) => {
+                    const x = e.clientX - gapX;
+                    el_table.scrollLeft -= x / 10;
+                    return false;
+                }, {signal});
+            }, 300);
+        });
+
+        document.addEventListener('mouseup', () => {
+            clearTimeout(timeCount);
             timeCount = 0;
-            el_table.style.cursor = 'grab';
-            gapX = e.clientX;
-            startX = el_table.scrollWidth;
-
-            controller = new AbortController();
-            const {signal} = controller;
-
-            el_table.addEventListener('mousemove', (e) => {
-                const x = e.clientX - gapX;
-                el_table.scrollLeft -= x / 10;
-                return false;
-            }, {signal});
-        }, 300);
-    });
-
-    document.addEventListener('mouseup', () => {
-        clearTimeout(timeCount);
-        timeCount = 0;
-        el_table.style.cursor = 'auto';
-        if (controller) {
-            controller.abort();
-        }
-    });
+            el_table.style.cursor = 'auto';
+            if (controller) {
+                controller.abort();
+            }
+        });
+    })();
 </script>
 
 <!-- Logout request -->
@@ -955,8 +961,9 @@
 
 <!-- User Setting -->
 <script>
-    const user = localStorage.getItem('user');
-    document.getElementById('navbarDropdownMenuLink2').innerText = user;
+    ;(() => {
+        document.getElementById('navbarDropdownMenuLink2').innerText = localStorage.getItem('user');
+    })();
 </script>
 
 <!-- Github buttons -->

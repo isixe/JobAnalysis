@@ -532,8 +532,9 @@
 
 <!-- User Setting -->
 <script>
-    const user = localStorage.getItem('user');
-    document.getElementById('navbarDropdownMenuLink2').innerText = user;
+    ;(() => {
+        document.getElementById('navbarDropdownMenuLink2').innerText = localStorage.getItem('user');
+    })();
 </script>
 
 <!-- Github buttons -->
