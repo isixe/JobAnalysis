@@ -195,6 +195,8 @@ def add():
 
     data = get_data[file_type](file_stream)
 
+    data = data.fillna('')
+
     if file_source == 'csv':
         header = False
         if not os.path.exists(CSV_FILE_PATH):
@@ -327,6 +329,8 @@ def get_data_by_name(name: str, dtype: str, directory: str):
 
 
 def bind_area_spider(name: str):
+    """ Binding area spider by name """
+
     bindSpider = {
         '51job': areaspider51,
     }
@@ -335,6 +339,8 @@ def bind_area_spider(name: str):
 
 
 def bind_job_spider(name: str):
+    """ Binding jobs spider by name """
+
     bindSpider = {
         '51job': jobspider51,
     }
@@ -343,6 +349,8 @@ def bind_job_spider(name: str):
 
 
 def part_spider(name: str, keyword: str, area: str, type: str):
+    """ spider by single area """
+
     spider = bind_job_spider(name)
 
     param = {
@@ -358,6 +366,8 @@ def part_spider(name: str, keyword: str, area: str, type: str):
 
 
 def full_spider(name: str, keyword: str, type: str):
+    """ spider by all area """
+
     root = os.path.abspath('..')
     spider = bind_job_spider(name)
 
