@@ -146,8 +146,6 @@
                 <div class="ms-md-auto pe-md-3 d-flex align-items-center">
 
                     <div class="input-group input-group-outline">
-                        <label class="form-label">Type here...</label>
-                        <input type="text" class="form-control">
                     </div>
 
                 </div>
@@ -188,43 +186,110 @@
 
 
     <div class="container-fluid py-4">
+        <div class="row">
+            <div class="text-start col-6">
+                <div class="row ms-2">
+                    <select class="form-select ps-2 pe-2 w-25 p-1 border-primary text-primary font-weight-bold"
+                            id="data-name" name="data-name">
+                        <option value="51job">前程无忧</option>
+                    </select>
 
-        <footer class="footer py-4  ">
-            <div class="container-fluid">
-                <div class="row align-items-center justify-content-lg-between">
-                    <div class="col-lg-6 mb-lg-0 mb-4">
-                        <div class="copyright text-center text-sm text-muted text-lg-start">
-                            ©
-                            <script>
-                                document.write(new Date().getFullYear())
-                            </script>
-                            ,
-                            made with <i class="fa fa-heart"></i> by
-                            <a href="https://github.com/isixe" class="font-weight-bold text-black-50"
-                               target="_blank">isixe</a>
-                            for a better job analysis.
+                </div>
+            </div>
+            <div class="text-end col-6 d-flex justify-content-end">
+                <select class="form-select pe-2 me-2 w-20 p-1 border-primary text-primary font-weight-bold"
+                        id="data-source" name="data-source">
+                    <option value="csv">CSV</option>
+                    <option value="db">SQLite</option>
+                </select>
+            </div>
+            <div class="row min-vh-75 d-flex justify-content-center align-items-center">
+                <div class="col-6 mx-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            <p class="text-center font-weight-normal">清洗预览</p>
+                            <div class="d-flex justify-content-center">
+                                <div id="scuess-status"
+                                     class="swal2-icon swal2-success swal2-icon-show d-flex d-none">
+                                    <div class="swal2-success-circular-line-left"
+                                         style="background-color: rgb(255, 255, 255);"></div>
+                                    <span class="swal2-success-line-tip"></span> <span
+                                        class="swal2-success-line-long"></span>
+                                    <div class="swal2-success-ring"></div>
+                                    <div class="swal2-success-fix" style="background-color: rgb(255, 255, 255);"></div>
+                                    <div class="swal2-success-circular-line-right"
+                                         style="background-color: rgb(255, 255, 255);"></div>
+                                </div>
+
+                                <div id="failed-status"
+                                     class="clean-staus swal2-icon swal2-warning swal2-icon-show d-flex">
+                                    <div class="swal2-icon-content">!</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                            <li class="nav-item">
-                                <a href="https://github.com/isixe" class="nav-link text-black-50"
-                                   target="_blank">isixe</a>
-                            </li>
-                            <!--                            <li class="nav-item">-->
-                            <!--                                <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>-->
-                            <!--                            </li>-->
-                            <li class="nav-item">
-                                <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
-                                   target="_blank">License</a>
-                            </li>
-                        </ul>
+                        <div class="card-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-4 text-sm d-flex flex-column align-items-center">
+                                        <div>原始数据量</div>
+                                        <div id="origin-count">0</div>
+                                    </div>
+                                    <div class="col-md-4 text-sm d-flex flex-column align-items-center">
+                                        <div>当前数据量</div>
+                                        <div id="current-count">0</div>
+                                    </div>
+                                    <div class="col-md-4 text-sm d-flex flex-column align-items-center">
+                                        <div>清洗数量</div>
+                                        <div id="clean-count">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center m-4 pt-4">
+                                <button class="btn btn-outline-primary btn-sm mb-0 me-2" onclick="jobCleaner()">
+                                    开始清洗
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </footer>
+        </div>
     </div>
 
+    <footer class="footer py-4  ">
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-lg-between">
+                <div class="col-lg-6 mb-lg-0 mb-4">
+                    <div class="copyright text-center text-sm text-muted text-lg-start">
+                        ©
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>
+                        ,
+                        made with <i class="fa fa-heart"></i> by
+                        <a href="https://github.com/isixe" class="font-weight-bold text-black-50"
+                           target="_blank">isixe</a>
+                        for a better job analysis.
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                        <li class="nav-item">
+                            <a href="https://github.com/isixe" class="nav-link text-black-50"
+                               target="_blank">isixe</a>
+                        </li>
+                        <!--                            <li class="nav-item">-->
+                        <!--                                <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>-->
+                        <!--                            </li>-->
+                        <li class="nav-item">
+                            <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
+                               target="_blank">License</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
 </main>
 
 
@@ -345,6 +410,7 @@
 <script src="/static/js/plugins/perfect-scrollbar.min.js"></script>
 <script src="/static/js/plugins/smooth-scrollbar.min.js"></script>
 <script src="/static/js/plugins/sweetalert2@11.js"></script>
+<script src="/static/js/plugins/countup.min.js"></script>
 
 <script>
     var win = navigator.platform.indexOf('Win') > -1;
@@ -369,6 +435,166 @@
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     })
+</script>
+
+<!-- Data counter -->
+<script>
+    ;(() => {
+        let type = localStorage.getItem('datasource');
+        let dataname = localStorage.getItem('dataname') == null ? '51job' : localStorage.getItem('dataname');
+        const datasource = document.getElementById('data-source');
+
+        if (type) {
+            datasource.value = type;
+        } else {
+            datasource.value = 'csv';
+            type = 'csv';
+        }
+
+        datasource.addEventListener('change', function () {
+            localStorage.setItem('datasource', datasource.value);
+            window.location.reload();
+        });
+
+
+        const fetchData = async () => {
+            try {
+                const url = `/api/clean?name=${dataname}&type=${type}`;
+                const response = await fetch(url, {
+                    method: 'GET',
+                });
+                const result = await response.json();
+                if (result.status === 1) {
+                    return result.data;
+                }
+
+                if (result.status === 0) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: result.message,
+                    });
+                }
+            } catch (error) {
+                Toast.fire({
+                    icon: 'error',
+                    title: '网络错误，请稍后重试',
+                });
+            }
+        };
+
+        const startCountUp = (id, startValue) => {
+            let count = new CountUp(id, startValue);
+            if (!count.error) {
+                count.start();
+            } else {
+                console.log(count.error);
+            }
+        }
+
+        fetchData().then(data => {
+
+            if (data.currentCount > data.originCount) {
+                data.cleanCount = 0;
+            }
+
+            const counters = [
+                {id: 'origin-count', startValue: data.originCount},
+                {id: 'current-count', startValue: data.currentCount},
+                {id: 'clean-count', startValue: data.cleanCount}
+            ];
+
+            counters.forEach(counter => {
+                startCountUp(counter.id, counter.startValue);
+            });
+
+            const scuessStatus = document.getElementById('scuess-status');
+            const failedStatus = document.getElementById('failed-status');
+            failedStatus.classList.remove('d-none');
+            scuessStatus.classList.remove('d-none');
+
+            if (data.currentCount <= data.originCount) {
+                scuessStatus.classList.remove('d-none');
+                failedStatus.classList.add('d-none');
+            } else {
+                scuessStatus.classList.add('d-none');
+                failedStatus.classList.remove('d-none');
+            }
+        });
+    })();
+</script>
+
+<!-- job spider starter -->
+<script>
+    const jobCleaner = () => {
+        var timerInterval = 0;
+        const type = document.getElementById('data-source').value;
+        const dataname = localStorage.getItem('dataname') == null ? '51job' : localStorage.getItem('dataname');
+
+        const formData = new FormData();
+        formData.append('type', type);
+        formData.append('name', dataname);
+
+        const fetchData = async () => {
+            try {
+                const url = `/api/clean`;
+                const response = await fetch(url, {
+                    method: 'PUT',
+                    body: formData,
+                });
+                return await response.json();
+            } catch (error) {
+                Toast.fire({
+                    icon: 'error',
+                    title: '网络错误，请稍后重试',
+                });
+                Swal.close();
+                clearInterval(timerInterval);
+            }
+        };
+
+        Swal.fire({
+            title: "数据清洗中",
+            html: "已清洗<b></b>秒.",
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading();
+                const timer = Swal.getPopup().querySelector("b");
+                clearInterval(timerInterval);
+                let Interval = 0;
+                timerInterval = setInterval(() => {
+                    Interval++;
+                    timer.textContent = Interval;
+                }, 1000);
+            },
+            willClose: () => {
+                timerInterval = 0;
+                clearInterval(timerInterval);
+            }
+        });
+
+        fetchData().then(result => {
+            Swal.close();
+
+            if (result.status === 1) {
+                Toast.fire({
+                    icon: 'success',
+                    title: '清洗完成'
+                });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+
+            if (result.status === 0) {
+                Toast.fire({
+                    icon: 'error',
+                    title: result.message,
+                });
+            }
+            clearInterval(timerInterval);
+
+        });
+    };
 </script>
 
 <!-- Logout request -->
@@ -396,8 +622,9 @@
 
 <!-- User Setting -->
 <script>
-    const user = localStorage.getItem('user');
-    document.getElementById('navbarDropdownMenuLink2').innerText = user;
+    ;(() => {
+        document.getElementById('navbarDropdownMenuLink2').innerText = localStorage.getItem('user');
+    })();
 </script>
 
 <!-- Github buttons -->
