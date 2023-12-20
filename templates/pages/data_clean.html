@@ -506,11 +506,11 @@
             if (data.currentCount <= data.originCount && data.currentCount > 0) {
                 scuessStatus.classList.remove('d-none');
                 failedStatus.classList.add('d-none');
-                document.getElementById('clean-btn').innerHTML = '重新爬取';
+                document.getElementById('clean-btn').innerHTML = '重新清洗';
             } else {
                 scuessStatus.classList.add('d-none');
                 failedStatus.classList.remove('d-none');
-                document.getElementById('clean-btn').innerHTML = '开始爬取';
+                document.getElementById('clean-btn').innerHTML = '开始清洗';
             }
         });
     })();
