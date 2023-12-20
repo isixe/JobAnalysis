@@ -283,9 +283,9 @@
                         <h6 class="mb-0 ">月数据预览</h6>
                         <p class="text-sm ">按月呈现</p>
                         <hr class="dark horizontal">
-                        <div class="d-flex ">
+                        <div class="d-flex">
                             <i class="material-icons text-sm my-auto me-1">schedule</i>
-                            <p class="mb-0 text-sm">最后数据更新时间：20223-21-2</p>
+                            <p class="mb-0 text-sm">招聘月发布峰值：<span id="monthly-peak"></span></p>
                         </div>
                     </div>
                 </div>
@@ -306,7 +306,7 @@
                         <hr class="dark horizontal">
                         <div class="d-flex ">
                             <i class="material-icons text-sm my-auto me-1">schedule</i>
-                            <p class="mb-0 text-sm">最后数据更新时间：20223-21-2</p>
+                            <p class="mb-0 text-sm">招聘周发布峰值：<span id="weekly-peek"></span></p>
                         </div>
                     </div>
                 </div>
@@ -565,6 +565,14 @@
             counters.forEach(counter => {
                 startCountUp(counter.id, counter.startValue);
             });
+
+            const weekday = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期七']
+            const month = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+
+            const mMaxIndex = data.monthlyCounts.indexOf(Math.max(...data.monthlyCounts));
+            const wMaxIndex = data.weekCounts.indexOf(Math.max(...data.weekCounts));
+            document.getElementById('monthly-peak').innerText = `${month[mMaxIndex]}（${data.monthlyCounts[mMaxIndex]}）`;
+            document.getElementById('weekly-peek').innerText = `${weekday[wMaxIndex]}（${data.weekCounts[wMaxIndex]}）`;
 
             var ctx = document.getElementById("chart-bars").getContext("2d");
 
