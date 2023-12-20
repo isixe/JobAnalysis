@@ -3,7 +3,8 @@
 # @Time    : 2023/12/17 21:37
 # @Author  : isixe
 # @Version : python3.11.2
-# @Desc    : $END$
+# @Desc    : data spider view
+
 import math
 import os
 import re

@@ -3,7 +3,7 @@
 # @Time    : 2023/12/19 13:52
 # @Author  : isixe
 # @Version : python3.11.2
-# @Desc    : data clean
+# @Desc    : data clean view
 
 import os
 import pandas as pd

@@ -3,7 +3,7 @@
 # @Time    : 2023/12/14 22:46
 # @Author  : isixe
 # @Version : python3.11.2
-# @Desc    : $END$
+# @Desc    : data predict view
 
 from flask import Blueprint, render_template, redirect, session
 

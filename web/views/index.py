@@ -3,7 +3,8 @@
 # @Time    : 2023/12/13 13:25
 # @Author  : isixe
 # @Version : python3.11.2
-# @Desc    : home view
+# @Desc    : index view
+
 import os
 import pandas as pd
 from flask import Blueprint, render_template, redirect, session, request, abort
@@ -39,6 +40,8 @@ def home():
 
 @index.route('/api/preview')
 def get():
+    """ Get job perview data """
+
     name = request.args.get('name')
     dtype = request.args.get('type')
 
