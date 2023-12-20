@@ -3,7 +3,7 @@
 # @Time    : 2023/12/15 0:15
 # @Author  : isixe
 # @Version : python3.11.2
-# @Desc    : $END$
+# @Desc    : job analysis view
 
 from flask import Blueprint, render_template, redirect, session
 
@@ -26,9 +26,9 @@ def login_required(view_func):
     return wrapper
 
 
-@analysis.route('/analysis/job51')
+@analysis.route('/analysis')
 @login_required
 def job51():
     """ linear predict page """
 
-    return render_template('pages/analysis_job51.html')
+    return render_template('pages/analysis.html')
