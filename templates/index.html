@@ -146,8 +146,6 @@
                 <div class="ms-md-auto pe-md-3 d-flex align-items-center">
 
                     <div class="input-group input-group-outline">
-                        <label class="form-label">Type here...</label>
-                        <input type="text" class="form-control">
                     </div>
 
                 </div>
@@ -189,21 +187,36 @@
 
     <div class="container-fluid py-4">
         <div class="row">
+            <div class="text-start col-6">
+                <div class="row ms-2">
+                    <select class="form-select ps-2 pe-2 w-25 p-1 border-primary text-primary font-weight-bold"
+                            id="data-name" name="data-name">
+                        <option value="51job">前程无忧</option>
+                    </select>
+                </div>
+            </div>
+            <div class="text-end col-6 d-flex justify-content-end">
+                <select class="form-select pe-2 me-2 w-20 p-1 border-primary text-primary font-weight-bold"
+                        id="data-source" name="data-source">
+                    <option value="csv">CSV</option>
+                    <option value="db">SQLite</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-5">
             <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
                 <div class="card">
                     <div class="card-header p-3 pt-2">
                         <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-                            <i class="material-icons opacity-10">weekend</i>
+                            <i class="material-icons opacity-10">signal_cellular_alt</i>
                         </div>
                         <div class="text-end pt-1">
-                            <p class="text-sm mb-0 text-capitalize">Today's Money</p>
-                            <h4 class="mb-0">$53k</h4>
+                            <p class="text-sm mb-0 text-capitalize">数据量</p>
+                            <h4 class="mb-0" id="total-count">0</h4>
                         </div>
                     </div>
                     <hr class="dark horizontal my-0">
                     <div class="card-footer p-3">
-                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>than last week
-                        </p>
                     </div>
                 </div>
             </div>
@@ -211,17 +224,15 @@
                 <div class="card">
                     <div class="card-header p-3 pt-2">
                         <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
-                            <i class="material-icons opacity-10">person</i>
+                            <i class="material-icons opacity-10">location_city</i>
                         </div>
                         <div class="text-end pt-1">
-                            <p class="text-sm mb-0 text-capitalize">Today's Users</p>
-                            <h4 class="mb-0">2,300</h4>
+                            <p class="text-sm mb-0 text-capitalize">地区数量</p>
+                            <h4 class="mb-0" id="area-count">0</h4>
                         </div>
                     </div>
                     <hr class="dark horizontal my-0">
                     <div class="card-footer p-3">
-                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+3% </span>than last month
-                        </p>
                     </div>
                 </div>
             </div>
@@ -229,17 +240,15 @@
                 <div class="card">
                     <div class="card-header p-3 pt-2">
                         <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
-                            <i class="material-icons opacity-10">person</i>
+                            <i class="material-icons opacity-10">domain</i>
                         </div>
                         <div class="text-end pt-1">
-                            <p class="text-sm mb-0 text-capitalize">New Clients</p>
-                            <h4 class="mb-0">3,462</h4>
+                            <p class="text-sm mb-0 text-capitalize">公司数量</p>
+                            <h4 class="mb-0" id="company-count">0</h4>
                         </div>
                     </div>
                     <hr class="dark horizontal my-0">
                     <div class="card-footer p-3">
-                        <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> than yesterday
-                        </p>
                     </div>
                 </div>
             </div>
@@ -247,120 +256,98 @@
                 <div class="card">
                     <div class="card-header p-3 pt-2">
                         <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
-                            <i class="material-icons opacity-10">weekend</i>
+                            <i class="material-icons opacity-10">category</i>
                         </div>
                         <div class="text-end pt-1">
-                            <p class="text-sm mb-0 text-capitalize">Sales</p>
-                            <h4 class="mb-0">$103,430</h4>
+                            <p class="text-sm mb-0 text-capitalize">公司类型数量</p>
+                            <h4 class="mb-0" id="company-type-count">0</h4>
                         </div>
                     </div>
                     <hr class="dark horizontal my-0">
                     <div class="card-footer p-3">
-                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than yesterday
-                        </p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row mt-4">
-            <div class="col-lg-4 col-md-6 mt-4 mb-4">
-                <div class="card z-index-2 ">
+            <div class="col-md-6 mt-4 mb-4">
+                <div class="card">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
                         <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
-                            <div class="chart">
-                                <canvas id="chart-bars" class="chart-canvas" height="170"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h6 class="mb-0 ">Website Views</h6>
-                        <p class="text-sm ">Last Campaign Performance</p>
-                        <hr class="dark horizontal">
-                        <div class="d-flex ">
-                            <i class="material-icons text-sm my-auto me-1">schedule</i>
-                            <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mt-4 mb-4">
-                <div class="card z-index-2  ">
-                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                        <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
                             <div class="chart">
                                 <canvas id="chart-line" class="chart-canvas" height="170"></canvas>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <h6 class="mb-0 "> Daily Sales </h6>
-                        <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>) increase in today sales.
-                        </p>
+                        <h6 class="mb-0 ">月数据预览</h6>
+                        <p class="text-sm ">按月呈现</p>
                         <hr class="dark horizontal">
                         <div class="d-flex ">
                             <i class="material-icons text-sm my-auto me-1">schedule</i>
-                            <p class="mb-0 text-sm"> updated 4 min ago </p>
+                            <p class="mb-0 text-sm">最后数据更新时间：20223-21-2</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 mt-4 mb-3">
-                <div class="card z-index-2 ">
+
+            <div class="col-md-6 mt-4 mb-4">
+                <div class="card">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                        <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
+                        <div class="bg-gradient-success shadow-primary border-radius-lg py-3 pe-1">
                             <div class="chart">
-                                <canvas id="chart-line-tasks" class="chart-canvas" height="170"></canvas>
+                                <canvas id="chart-bars" class="chart-canvas" height="170"></canvas>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <h6 class="mb-0 ">Completed Tasks</h6>
-                        <p class="text-sm ">Last Campaign Performance</p>
+                        <h6 class="mb-0 ">星期数据预览</h6>
+                        <p class="text-sm ">按星期呈现</p>
                         <hr class="dark horizontal">
                         <div class="d-flex ">
                             <i class="material-icons text-sm my-auto me-1">schedule</i>
-                            <p class="mb-0 text-sm">just updated</p>
+                            <p class="mb-0 text-sm">最后数据更新时间：20223-21-2</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <footer class="footer py-4  ">
-            <div class="container-fluid">
-                <div class="row align-items-center justify-content-lg-between">
-                    <div class="col-lg-6 mb-lg-0 mb-4">
-                        <div class="copyright text-center text-sm text-muted text-lg-start">
-                            ©
-                            <script>
-                                document.write(new Date().getFullYear())
-                            </script>
-                            ,
-                            made with <i class="fa fa-heart"></i> by
-                            <a href="https://github.com/isixe" class="font-weight-bold text-black-50"
-                               target="_blank">isixe</a>
-                            for a better job analysis.
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                            <li class="nav-item">
-                                <a href="https://github.com/isixe" class="nav-link text-black-50"
-                                   target="_blank">isixe</a>
-                            </li>
-                            <!--                            <li class="nav-item">-->
-                            <!--                                <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>-->
-                            <!--                            </li>-->
-                            <li class="nav-item">
-                                <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
-                                   target="_blank">License</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
 
+            </div>
+            <footer class="footer py-4  ">
+                <div class="container-fluid">
+                    <div class="row align-items-center justify-content-lg-between">
+                        <div class="col-lg-6 mb-lg-0 mb-4">
+                            <div class="copyright text-center text-sm text-muted text-lg-start">
+                                ©
+                                <script>
+                                    document.write(new Date().getFullYear())
+                                </script>
+                                ,
+                                made with <i class="fa fa-heart"></i> by
+                                <a href="https://github.com/isixe" class="font-weight-bold text-black-50"
+                                   target="_blank">isixe</a>
+                                for a better job analysis.
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                                <li class="nav-item">
+                                    <a href="https://github.com/isixe" class="nav-link text-black-50"
+                                       target="_blank">isixe</a>
+                                </li>
+                                <!--                            <li class="nav-item">-->
+                                <!--                                <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>-->
+                                <!--                            </li>-->
+                                <li class="nav-item">
+                                    <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
+                                       target="_blank">License</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
 </main>
 
 
@@ -479,8 +466,9 @@
 
 <!--   Plugins JS Files   -->
 <script src="/static/js/plugins/perfect-scrollbar.min.js"></script>
-<script src="/static/js/plugins/smooth-scrollbar.min.js"></script>
 <script src="/static/js/plugins/sweetalert2@11.js"></script>
+<script src="/static/js/plugins/chartjs.min.js"></script>
+<script src="/static/js/plugins/countup.min.js"></script>
 
 <script>
     var win = navigator.platform.indexOf('Win') > -1;
@@ -505,6 +493,241 @@
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     })
+</script>
+
+<!-- Data loader -->
+<script>
+    ;(() => {
+        let type = localStorage.getItem('datasource');
+        const datasource = document.getElementById('data-source');
+        let dataname = localStorage.getItem('dataname') == null ? '51job' : localStorage.getItem('dataname');
+
+        if (type) {
+            datasource.value = type;
+        } else {
+            datasource.value = 'csv';
+            type = 'csv';
+        }
+
+        datasource.addEventListener('change', function () {
+            localStorage.setItem('datasource', datasource.value);
+            window.location.reload();
+        });
+
+        const fetchData = async () => {
+            try {
+                const url = `/api/preview?name=${dataname}&type=${type}`;
+                const response = await fetch(url, {
+                    method: 'GET',
+                });
+                const result = await response.json();
+
+                if (result.status === 1) {
+                    return result.data;
+                }
+
+                if (result.status === 0) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: result.message,
+                    });
+                }
+            } catch (error) {
+                Toast.fire({
+                    icon: 'error',
+                    title: '网络错误，请稍后重试',
+                });
+            }
+        };
+
+        const startCountUp = (id, startValue) => {
+            let count = new CountUp(id, startValue);
+            if (!count.error) {
+                count.start();
+            } else {
+                console.log(count.error);
+            }
+        }
+
+        fetchData().then(data => {
+            document.getElementById('total-count').innerText = data.totalCounts;
+            document.getElementById('company-count').innerText = data.companyCounts;
+            document.getElementById('area-count').innerText = data.areaCounts;
+            document.getElementById('company-type-count').innerText = data.companyTypeCounts;
+
+            const counters = [
+                {id: 'total-count', startValue: data.totalCounts},
+                {id: 'company-count', startValue: data.companyCounts},
+                {id: 'area-count', startValue: data.areaCounts},
+                {id: 'company-type-count', startValue: data.companyTypeCounts},
+            ];
+
+            counters.forEach(counter => {
+                startCountUp(counter.id, counter.startValue);
+            });
+
+            var ctx = document.getElementById("chart-bars").getContext("2d");
+
+            new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+                    datasets: [{
+                        label: "招聘职位数量",
+                        tension: 0.4,
+                        borderWidth: 0,
+                        borderRadius: 4,
+                        borderSkipped: false,
+                        backgroundColor: "rgba(255, 255, 255, .8)",
+                        data: data.weekCounts,
+                        maxBarThickness: 6
+                    },],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false,
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index',
+                    },
+                    scales: {
+                        y: {
+                            grid: {
+                                drawBorder: false,
+                                display: true,
+                                drawOnChartArea: true,
+                                drawTicks: false,
+                                borderDash: [5, 5],
+                                color: 'rgba(255, 255, 255, .2)'
+                            },
+                            ticks: {
+                                suggestedMin: 0,
+                                suggestedMax: 500,
+                                beginAtZero: true,
+                                padding: 10,
+                                font: {
+                                    size: 14,
+                                    weight: 300,
+                                    family: "Roboto",
+                                    style: 'normal',
+                                    lineHeight: 2
+                                },
+                                color: "#fff"
+                            },
+                        },
+                        x: {
+                            grid: {
+                                drawBorder: false,
+                                display: true,
+                                drawOnChartArea: true,
+                                drawTicks: false,
+                                borderDash: [5, 5],
+                                color: 'rgba(255, 255, 255, .2)'
+                            },
+                            ticks: {
+                                display: true,
+                                color: '#f8f9fa',
+                                padding: 10,
+                                font: {
+                                    size: 14,
+                                    weight: 300,
+                                    family: "Roboto",
+                                    style: 'normal',
+                                    lineHeight: 2
+                                },
+                            }
+                        },
+                    },
+                },
+            });
+            var ctx2 = document.getElementById("chart-line").getContext("2d");
+
+            new Chart(ctx2, {
+                type: "line",
+                data: {
+                    labels: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+                    datasets: [{
+                        label: "招聘职位数量",
+                        tension: 0,
+                        borderWidth: 0,
+                        pointRadius: 5,
+                        pointBackgroundColor: "rgba(255, 255, 255, .8)",
+                        pointBorderColor: "transparent",
+                        borderColor: "rgba(255, 255, 255, .8)",
+                        borderColor: "rgba(255, 255, 255, .8)",
+                        borderWidth: 4,
+                        backgroundColor: "transparent",
+                        fill: true,
+                        data: data.monthlyCounts,
+                        maxBarThickness: 6
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false,
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index',
+                    },
+                    scales: {
+                        y: {
+                            grid: {
+                                drawBorder: false,
+                                display: true,
+                                drawOnChartArea: true,
+                                drawTicks: false,
+                                borderDash: [5, 5],
+                                color: 'rgba(255, 255, 255, .2)'
+                            },
+                            ticks: {
+                                display: true,
+                                color: '#f8f9fa',
+                                padding: 10,
+                                font: {
+                                    size: 14,
+                                    weight: 300,
+                                    family: "Roboto",
+                                    style: 'normal',
+                                    lineHeight: 2
+                                },
+                            }
+                        },
+                        x: {
+                            grid: {
+                                drawBorder: false,
+                                display: false,
+                                drawOnChartArea: false,
+                                drawTicks: false,
+                                borderDash: [5, 5]
+                            },
+                            ticks: {
+                                display: true,
+                                color: '#f8f9fa',
+                                padding: 10,
+                                font: {
+                                    size: 14,
+                                    weight: 300,
+                                    family: "Roboto",
+                                    style: 'normal',
+                                    lineHeight: 2
+                                },
+                            }
+                        },
+                    },
+                },
+            });
+        });
+    })();
 </script>
 
 <!-- Logout request -->
