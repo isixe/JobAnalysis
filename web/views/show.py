@@ -211,10 +211,10 @@ def export():
         os.makedirs(directory)
 
     name = request.args.get('name')
-    type = request.args.get('type')
+    dtype = request.args.get('type')
     file_source = request.args.get('source')
 
-    if not file_source or not type or name not in ['51job']:
+    if not file_source or not dtype or name not in ['51job']:
         abort(400, description='参数异常！')
 
     CSV_DIRECTORY = f'{os.path.abspath("..")}/output/clean'
@@ -229,11 +229,11 @@ def export():
 
     data = data[file_source]
 
-    if type == 'csv':
+    if dtype == 'csv':
         data.to_csv(CSV_EXPORT_PATH, index=False)
         return send_file(CSV_EXPORT_PATH, as_attachment=True)
 
-    if type == 'excel':
+    if dtype == 'excel':
         data.to_excel(EXCEL_EXPORT_PATH, index=False)
         return send_file(EXCEL_EXPORT_PATH, as_attachment=True)
 
