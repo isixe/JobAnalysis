@@ -167,6 +167,16 @@ class JobCleaner51(object):
         data['tags'] = data['tags'].fillna(mode_value)
         return data
 
+    def __process_wrong_characters(self, data):
+        """ Remove wrong characters rows
+
+        :Arg:
+         - data: origin data
+        """
+        mask = data.apply(lambda x: x.astype(str).str.contains('�')).any(axis=1)
+        data = data[~mask]
+        return data
+
     def __save_to_csv(self, data: pd.DataFrame, output: str):
         """ Save data to csv
 
@@ -184,7 +194,7 @@ class JobCleaner51(object):
         """
 
         connect = sqlite3.connect(output)
-        data.to_sql('job51', connect, if_exists='replace',index=False)
+        data.to_sql('job51', connect, if_exists='replace', index=False)
         connect.close()
 
     def save(self, data: pd.DataFrame, type: str):
@@ -214,6 +224,7 @@ class JobCleaner51(object):
         data = self.__process_degree(data)
         data = self.__process_tags(data)
         data = self.__process_companyType(data)
+        data = self.__process_wrong_characters(data)
         data.drop('salary', axis=1, inplace=True)
         data.drop('issueDate', axis=1, inplace=True)
         return data
