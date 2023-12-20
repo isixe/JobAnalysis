@@ -245,7 +245,8 @@
                                 </div>
                             </div>
                             <div class="text-center m-4 pt-4">
-                                <button class="btn btn-outline-primary btn-sm mb-0 me-2" onclick="jobCleaner()">
+                                <button id="clean-btn" class="btn btn-outline-primary btn-sm mb-0 me-2"
+                                        onclick="jobCleaner()">
                                     开始清洗
                                 </button>
                             </div>
@@ -512,12 +513,14 @@
             failedStatus.classList.remove('d-none');
             scuessStatus.classList.remove('d-none');
 
-            if (data.currentCount <= data.originCount) {
+            if (data.currentCount <= data.originCount && data.currentCount > 0) {
                 scuessStatus.classList.remove('d-none');
                 failedStatus.classList.add('d-none');
+                document.getElementById('clean-btn').innerHTML = '重新爬取';
             } else {
                 scuessStatus.classList.add('d-none');
                 failedStatus.classList.remove('d-none');
+                document.getElementById('clean-btn').innerHTML = '开始爬取';
             }
         });
     })();
