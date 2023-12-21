@@ -639,27 +639,16 @@
         var timerInterval = 0;
         const keyword = document.getElementById('spider-search').value;
         const area = document.getElementById('data-area').value;
-        const type = document.getElementById('data-type').value;
+        const source = document.getElementById('data-source-row').value;
         const dataname = localStorage.getItem('dataname') == null ? '51job' : localStorage.getItem('dataname');
 
         const fetchData = async () => {
             try {
-                const url = `/api/spider/worker?name=${dataname}&keyword=${keyword}&area=${area}&type=${type}`;
+                const url = `/api/spider/worker?name=${dataname}&keyword=${keyword}&area=${area}&source=${source}`;
                 const response = await fetch(url, {
                     method: 'GET',
                 });
-                const result = await response.json();
-
-                if (result.status === 1) {
-                    return result.data
-                }
-
-                if (result.status === 0) {
-                    Toast.fire({
-                        icon: 'error',
-                        title: result.message,
-                    });
-                }
+                return await response.json();
             } catch (error) {
                 Toast.fire({
                     icon: 'error',
@@ -690,13 +679,28 @@
             }
         });
 
-        fetchData().then(data => {
-            Swal.close();
-            clearInterval(timerInterval);
-            Toast.fire({
-                icon: 'success',
-                title: '爬取完成'
-            });
+        fetchData().then(result => {
+
+            if (result.status === 0) {
+                Toast.fire({
+                    icon: 'error',
+                    title: result.message,
+                });
+                return;
+            }
+
+            if (result.status === 1) {
+                Swal.close();
+                clearInterval(timerInterval);
+                Toast.fire({
+                    icon: 'success',
+                    title: '爬取完成'
+                });
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000)
+            }
         });
     };
 </script>

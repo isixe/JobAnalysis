@@ -84,18 +84,18 @@ def get_area():
 def get_jobs():
     """ get job data """
 
-    if not all(request.args.get(key) for key in ['keyword', 'area', 'type', 'name']):
+    if not all(request.args.get(key) for key in ['keyword', 'area', 'source', 'name']):
         abort(400, description='参数不能为空！')
 
     keyword = request.args.get('keyword')
     area = request.args.get('area')
-    type = request.args.get('type')
+    source = request.args.get('source')
     name = request.args.get('name')
 
     if area == '000000':
-        full_spider(name, keyword, type)
+        full_spider(name, keyword, source)
     else:
-        part_spider(name, keyword, area, type)
+        part_spider(name, keyword, area, source)
 
     response = Result()
     response.set_status(1)
@@ -348,7 +348,7 @@ def bind_job_spider(name: str):
     return bindSpider[name]
 
 
-def part_spider(name: str, keyword: str, area: str, type: str):
+def part_spider(name: str, keyword: str, area: str, source: str):
     """ spider by single area """
 
     spider = bind_job_spider(name)
@@ -362,10 +362,10 @@ def part_spider(name: str, keyword: str, area: str, type: str):
         },
     }
     param = param[name]
-    spider.start(param, save_engine=type)
+    spider.start(param, save_engine=source)
 
 
-def full_spider(name: str, keyword: str, type: str):
+def full_spider(name: str, keyword: str, source: str):
     """ spider by all area """
 
     root = os.path.abspath('..')
@@ -375,7 +375,7 @@ def full_spider(name: str, keyword: str, type: str):
         '51job': '51area',
     }
 
-    if type == 'csv':
+    if source == 'csv':
         df = pd.read_csv(f'{root}/output/area/{area[name]}.csv', header=None, names=None, skiprows=1, delimiter=',')
 
         for area in df[0]:
@@ -385,9 +385,9 @@ def full_spider(name: str, keyword: str, type: str):
                 "pageSize": 1000,
                 "area": area
             }
-            spider.start(args=param, save_engine=type)
+            spider.start(args=param, save_engine=source)
 
-    if type == 'db':
+    if source == 'db':
         results = None
         connect = sqlite3.connect(f'{root}//output/area/{name}.db')
         cursor = connect.cursor()
@@ -414,7 +414,7 @@ def full_spider(name: str, keyword: str, type: str):
                 "pageSize": 1000,
                 "area": area[0]
             }
-            spider.start(args=param, save_engine=type)
+            spider.start(args=param, save_engine=source)
 
 
 @spider.errorhandler(400)
