@@ -84,13 +84,13 @@ def get_area():
 def get_jobs():
     """ get job data """
 
+    if not all(request.args.get(key) for key in ['keyword', 'area', 'type', 'name']):
+        abort(400, description='参数不能为空！')
+
     keyword = request.args.get('keyword')
     area = request.args.get('area')
     type = request.args.get('type')
     name = request.args.get('name')
-
-    if not all(request.args.get(key) for key in ['keyword', 'area', 'type', 'name']):
-        abort(400, description='参数不能为空！')
 
     if area == '000000':
         full_spider(name, keyword, type)

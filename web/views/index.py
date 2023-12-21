@@ -42,14 +42,13 @@ def home():
 def get():
     """ Get job perview data """
 
-    name = request.args.get('name')
-    dtype = request.args.get('type')
-
     if not all(request.args.get(key) for key in ['name', 'type']):
         abort(400, description='参数不能为空！')
 
-    root = os.path.abspath('..')
+    name = request.args.get('name')
+    dtype = request.args.get('type')
 
+    root = os.path.abspath('..')
     directory = os.path.join(root, f'output/job')
 
     flag = {

@@ -76,6 +76,7 @@ def selcct():
 
 @clean.route('/api/clean', methods=["PUT"])
 def add():
+    """ data import by csv or excel """
 
     data = request.form
     name = data.get('name')
