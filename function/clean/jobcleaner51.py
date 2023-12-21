@@ -119,6 +119,9 @@ class JobCleaner51(object):
          - data: origin data
         """
         data['workYear'] = data['workYear'].replace(['无需经验', '在校生/应届生'], '0年')
+        modeValue = data['workYear'].mode()[0]
+        data['workYear'] = data['workYear'].fillna(modeValue)
+        data['workYear'] = data['workYear'].replace('', modeValue)
         return data
 
     def __process_size(self, data: pd.DataFrame):
@@ -133,8 +136,8 @@ class JobCleaner51(object):
         data['companySize'] = data['companySize'].str.replace('10000�以上', '10000人以上')
         data['companySize'] = data['companySize'].str.replace('150-500�', '150-500人')
         data['companySize'] = data['companySize'].str.replace('10000人以��', '10000人以上')
-        mode_value = data['companySize'].mode()[0]
-        data['companySize'] = data['companySize'].fillna(mode_value)
+        modeValue = data['companySize'].mode()[0]
+        data['companySize'] = data['companySize'].fillna(modeValue)
         return data
 
     def __process_companyType(self, data):
@@ -143,8 +146,8 @@ class JobCleaner51(object):
         :Arg:
          - data: origin data
         """
-        mode_value = data['companyType'].mode()[0]
-        data['companyType'] = data['companyType'].fillna(mode_value)
+        modeValue = data['companyType'].mode()[0]
+        data['companyType'] = data['companyType'].fillna(modeValue)
         return data
 
     def __process_degree(self, data):
@@ -153,7 +156,9 @@ class JobCleaner51(object):
         :Arg:
          - data: origin data
         """
-        data['degree'].fillna(data['degree'].mode()[0], inplace=True)
+        modeValue = data['degree'].mode()[0]
+        data['degree'].fillna(modeValue, inplace=True)
+        data['degree'] = data['degree'].replace('', modeValue)
         return data
 
     def __process_tags(self, data):
@@ -163,8 +168,8 @@ class JobCleaner51(object):
          - data: origin data
         """
         data['tags'] = data['tags'].str.split(',', n=2).str[2]
-        mode_value = data['tags'].mode()[0]
-        data['tags'] = data['tags'].fillna(mode_value)
+        modeValue = data['tags'].mode()[0]
+        data['tags'] = data['tags'].fillna(modeValue)
         return data
 
     def __process_wrong_characters(self, data):
