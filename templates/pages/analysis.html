@@ -14,10 +14,6 @@
     <link rel="stylesheet" type="text/css"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700"/>
 
-    <!-- Nucleo Icons -->
-    <link href="/static/css/nucleo-icons.css" rel="stylesheet"/>
-    <link href="/static/css/nucleo-svg.css" rel="stylesheet"/>
-
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 
@@ -117,7 +113,7 @@
     </div>
 </aside>
 
-<main class="main-content border-radius-lg ">
+<main class="main-content border-radius-lg">
     <!-- Navbar -->
 
     <nav class="navbar navbar-main navbar-expand-lg mx-4 shadow-none border-radius-xl" id="navbarBlur"
@@ -137,8 +133,6 @@
                 <div class="ms-md-auto pe-md-3 d-flex align-items-center">
 
                     <div class="input-group input-group-outline">
-                        <label class="form-label">Type here...</label>
-                        <input type="text" class="form-control">
                     </div>
 
                 </div>
@@ -179,8 +173,31 @@
 
 
     <div class="container-fluid py-4">
-
-        <footer class="footer py-4  ">
+        <div class="row">
+            <div class="text-start col-6">
+                <div class="row ms-2">
+                    <select class="form-select ps-2 pe-2 w-25 p-1 border-primary text-primary font-weight-bold"
+                            id="data-name" name="data-name">
+                        <option value="51job">前程无忧</option>
+                    </select>
+                </div>
+            </div>
+            <div class="text-end col-6 d-flex justify-content-end">
+                <select class="form-select pe-2 me-2 w-20 p-1 border-primary text-primary font-weight-bold"
+                        id="data-source" name="data-source">
+                    <option value="csv">CSV</option>
+                    <option value="db">SQLite</option>
+                </select>
+                <select class="form-select pe-2 me-2 w-20 p-1 border-primary text-primary font-weight-bold"
+                        id="chart-type" name="chart-type">
+                    <option value="matplotlib">Matplotlib</option>
+                    <option value="pyecharts">Pyecharts</option>
+                </select>
+            </div>
+        </div>
+        <div class="main-content d-flex justify-content-start mt-2 flex-wrap align-items-start" id="main-content">
+        </div>
+        <footer class="footer py-4">
             <div class="container-fluid">
                 <div class="row align-items-center justify-content-lg-between">
                     <div class="col-lg-6 mb-lg-0 mb-4">
@@ -334,7 +351,6 @@
 
 <!--   Plugins JS Files   -->
 <script src="/static/js/plugins/perfect-scrollbar.min.js"></script>
-<script src="/static/js/plugins/smooth-scrollbar.min.js"></script>
 <script src="/static/js/plugins/sweetalert2@11.js"></script>
 
 <script>
@@ -360,6 +376,99 @@
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     })
+</script>
+
+
+<!-- Chart loader -->
+<script>
+    ;(() => {
+        let saveType = localStorage.getItem('datasource');
+        let saveChartype = localStorage.getItem('chartype');
+
+        const datasource = document.getElementById('data-source');
+        const chartype = document.getElementById('chart-type');
+        let dataname = localStorage.getItem('dataname') == null ? '51job' : localStorage.getItem('dataname');
+
+        if (saveType) {
+            datasource.value = saveType;
+        } else {
+            datasource.value = 'csv';
+            saveType = 'csv';
+        }
+
+        if (saveChartype) {
+            chartype.value = saveChartype;
+        } else {
+            chartype.value = 'matplotlib';
+            saveChartype = 'matplotlib';
+        }
+
+        datasource.addEventListener('change', function () {
+            localStorage.setItem('datasource', datasource.value);
+            window.location.reload();
+        });
+
+        chartype.addEventListener('change', function () {
+            localStorage.setItem('chartype', chartype.value);
+            window.location.reload();
+        });
+
+
+        const fetchData = async () => {
+            try {
+                const url = `/api/analysis?name=${dataname}&type=${saveType}&chartype=${saveChartype}`;
+                const response = await fetch(url, {
+                    method: 'GET',
+                });
+                return await response.json();
+            } catch (error) {
+                Toast.fire({
+                    icon: 'error',
+                    title: '网络错误，请稍后重试',
+                });
+            }
+        };
+
+        fetchData().then(result => {
+
+            if (result.status === 0) {
+                Toast.fire({
+                    icon: 'error',
+                    title: result.message,
+                });
+                return;
+            }
+
+            if (result.status === 1) {
+                const items = result.data;
+                const content = document.getElementById('main-content');
+                for (const key in items) {
+                    if (items.hasOwnProperty(key)) {
+                        const item = items[key];
+
+                        const chart = document.createElement('div');
+                        chart.className='col-md-6';
+                        chart.innerHTML = `<div class="card m-2">
+                                                <div class="card-header">
+                                                    <h6 class="mb-0 ">${item.title}</h6>
+                                                </div>
+                                                <div class="card-body p-0 d-flex justify-content-center align-content-center">
+                                                    <img class="w-95" src="${item.data}">
+                                                </div>
+                                                <div class="card-footer pt-0">
+                                                    <hr class="dark horizontal">
+                                                    <div class="d-flex ">
+                                                        <i class="material-icons text-sm my-auto me-1">verified</i>
+                                                        <p class="mb-0 text-sm">${item.issue}</p>
+                                                    </div>
+                                                </div>
+                                            </div>`;
+                        content.appendChild(chart);
+                    }
+                }
+            }
+        });
+    })();
 </script>
 
 <!-- Logout request -->
