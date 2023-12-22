@@ -34,6 +34,7 @@ class MatplotlibDrawer(object):
          - legendlabels: legend label list
         """
         self.plt.bar(x, y, color='#1f77b4')
+
         self.plt.title(title, y=1.05)
         self.plt.xlabel(xlabel)
         self.plt.ylabel(ylabel)
@@ -57,7 +58,11 @@ class MatplotlibDrawer(object):
          - legendlabels: legend label list
         """
         fig, ax = self.plt.subplots()
-        ax.pie(x, labels=labels, labeldistance=1.1, autopct='%1.1f%%')
+        ax.pie(x,
+               labels=labels,
+               labeldistance=1.1,
+               autopct='%1.1f%%')
+
         bbox = ax.get_position()
         ax.set_position([bbox.x0 - 0.1, bbox.y0, bbox.width, bbox.height])
         ax.legend(legendlabels, loc='upper right', bbox_to_anchor=(1.35, 1.1))
@@ -94,7 +99,12 @@ class MatplotlibDrawer(object):
          - xlabel: x axis label
          - ylabel: y axis label
         """
-        self.plt.scatter(y, x, c="lightblue", edgecolors="green", s=50)
+        self.plt.scatter(y,
+                         x,
+                         c="lightblue",
+                         edgecolors="green",
+                         s=50)
+
         self.plt.title(title, y=1.05)
         self.plt.xlabel(xlabel)
         self.plt.ylabel(ylabel)
@@ -126,7 +136,14 @@ class MatplotlibDrawer(object):
          - xlabel: x axis label
          - ylabel: y axis label
         """
-        self.plt.barh(y, x, facecolor='tan', height=150, edgecolor='r', alpha=0.6, tick_label=y)
+        self.plt.barh(y,
+                      x,
+                      facecolor='tan',
+                      height=150,
+                      edgecolor='r',
+                      alpha=0.6,
+                      tick_label=y)
+
         self.plt.title(title, y=1.05)
         self.plt.xlabel(xlabel)
         self.plt.ylabel(ylabel)
@@ -142,8 +159,11 @@ class MatplotlibDrawer(object):
          - text:
          - title: plt title
         """
-        wordcloud = WordCloud(font_path='/fonts/simkai.ttf', height=800, width=1000, background_color="white").generate(
-            text)
+        wordcloud = WordCloud(font_path='/fonts/simkai.ttf',
+                              height=800,
+                              width=1000,
+                              background_color="white").generate(text)
+
         self.plt.imshow(wordcloud, interpolation='bilinear')
         self.plt.title(title, y=1.05)
         self.plt.axis('off')
