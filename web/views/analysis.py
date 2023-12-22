@@ -74,14 +74,22 @@ def draw():
     salaryLevel = salaryLevel[0] + (len(salaryLevel) - 1) * '0'
 
     companySize = dict(data['companySize'].value_counts())
-    companySize.pop('')
+    if '' in companySize:
+        companySize.pop('')
 
     text = data['tags'].str.cat(sep=',')
     wordFrequent = Counter(text.split(','))
     topWordFrequents = '、'.join([item[0] for item in wordFrequent.most_common(3)])
 
     companyName = dict(data['companyName'].value_counts())
-    # print(companyName)
+
+    salaryByDegree = data.groupby('degree')
+    degree = list(salaryByDegree.groups.keys())
+
+    topThreeTuple = sorted(salaryByDegree.groups.items(), key=lambda x: sum(x[1]), reverse=True)[:3]
+    topThreeDegree = [str(degree[0]) for degree in topThreeTuple]
+    topThreeDegree = '、'.join(topThreeDegree)
+    salaryByDegree = salaryByDegree['min_salary'].apply(list).values
 
     items = {
         'bar': {
@@ -96,6 +104,16 @@ def draw():
             'title': '学历要求饼状图',
             'data': degreeCount,
             'issue': f'学历为 <b>{max(degreeCount, key=degreeCount.get)}</b> 时，招聘岗位数量最多，优势越大'
+        },
+        'boxplot': {
+            'title': '薪资与学历箱线图',
+            'data': {
+                'salary': salaryByDegree,
+                'degree': degree
+            },
+            'xlabel': '学历要求',
+            'ylabel': '薪资水平',
+            'issue': f'根据上述图标，可以知道招聘薪资分布主要集中在 <b>{topThreeDegree}</b> 学历'
         },
         'scatter': {
             'title': '薪资分布散点图',
@@ -119,7 +137,7 @@ def draw():
             'data': companySize,
             'xlabel': '公司规模',
             'ylabel': '公司数量',
-            'legendlabels': ['公司数量'],
+            'legendlabels': ['公司规模'],
             'issue': f'公司规模主要分布在 <b>{max(companySize, key=companySize.get)}</b> 区间'
         },
         'wordcloud': {
@@ -165,6 +183,11 @@ def get_charts_by_matplotlib(drawer: MatplotlibDrawer, items: dict):
     values = list(chartdata.values())
     plt = drawer.pie(values, keys, chart['title'], keys)
     items['pie']['data'] = drawer.generate_base64(plt)
+
+    chart = items['boxplot']
+    chartdata = chart['data']
+    plt = drawer.boxplot(chartdata['degree'], chartdata['salary'], chart['title'], chart['xlabel'], chart['ylabel'])
+    items['boxplot']['data'] = drawer.generate_base64(plt)
 
     chart = items['scatter']
     chartdata = chart['data']
