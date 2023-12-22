@@ -191,12 +191,12 @@ def get_charts_by_matplotlib(drawer: MatplotlibDrawer, items: dict):
 
     chart = items['scatter']
     chartdata = chart['data']
-    plt = drawer.scatter(chartdata, range(len(chartdata)), chart['title'], chart['xlabel'], chart['ylabel'])
+    plt = drawer.scatter(chartdata, list(range(len(chartdata))), chart['title'], chart['xlabel'], chart['ylabel'])
     items['scatter']['data'] = drawer.generate_base64(plt)
 
     chart = items['plot']
     chartdata = chart['data']
-    plt = drawer.plot(chartdata['minSalary'], chartdata['maxSalary'], range(len(chartdata['minSalary'])),
+    plt = drawer.plot(chartdata['minSalary'], chartdata['maxSalary'], list(range(len(chartdata['minSalary']))),
                       chart['title'], chart['xlabel'], chart['ylabel'])
     items['plot']['data'] = drawer.generate_base64(plt)
 
