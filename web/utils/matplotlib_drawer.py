@@ -48,6 +48,38 @@ class MatplotlibDrawer(object):
 
         return self.plt
 
+    def barh(self, x: list, y: list, title: str, xlabel: str, ylabel: str, legendlabels: list):
+        """ Draw barh by plt
+
+        :Arg:
+         - x: x axis list
+         - y: y axis list
+         - title: plt title
+         - xlabel: x axis label
+         - ylabel: y axis label
+        """
+        fig, ax = self.plt.subplots()
+        ax.barh(x,
+                y,
+                color='maroon',
+                alpha=0.6,
+                tick_label=y)
+
+        bbox = ax.get_position()
+        ax.set_position([bbox.x0 + 0.05, bbox.y0, bbox.width, bbox.height])
+        self.plt.yticks(range(0, len(x)), x)
+        self.plt.title(title, y=1.05)
+        self.plt.xlabel(xlabel)
+        self.plt.ylabel(ylabel)
+        self.plt.legend(legendlabels, loc='upper right')
+        self.plt.gca().spines['top'].set_visible(False)
+        self.plt.gca().spines['right'].set_visible(False)
+
+        for i in range(len(x)):
+            self.plt.annotate(str(y[i]), xy=(y[i] + 150, x[i]), ha='center', va='center')
+
+        return self.plt
+
     def pie(self, x: list, labels: list, title: str, legendlabels: list):
         """  Draw pie by plt
 
@@ -122,32 +154,6 @@ class MatplotlibDrawer(object):
         self.plt.ylabel(ylabel)
         self.plt.axhline(averageA, color='blue', linestyle='--', label='Average')
         self.plt.axhline(averageB, color='red', linestyle='--', label='Average')
-        self.plt.gca().spines['top'].set_visible(False)
-        self.plt.gca().spines['right'].set_visible(False)
-        return self.plt
-
-    def barh(self, x: list, y: list, title: str, xlabel: str, ylabel: str, legendlabels: list):
-        """ Draw barh by plt
-
-        :Arg:
-         - x: x axis list
-         - y: y axis list
-         - title: plt title
-         - xlabel: x axis label
-         - ylabel: y axis label
-        """
-        self.plt.barh(y,
-                      x,
-                      facecolor='tan',
-                      height=150,
-                      edgecolor='r',
-                      alpha=0.6,
-                      tick_label=y)
-
-        self.plt.title(title, y=1.05)
-        self.plt.xlabel(xlabel)
-        self.plt.ylabel(ylabel)
-        self.plt.legend(legendlabels, loc='upper right')
         self.plt.gca().spines['top'].set_visible(False)
         self.plt.gca().spines['right'].set_visible(False)
         return self.plt
