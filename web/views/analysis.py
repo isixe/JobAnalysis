@@ -7,13 +7,11 @@
 
 import os
 import re
-from collections import Counter
-
-import numpy as np
 import pandas as pd
-from flask import Blueprint, render_template, redirect, session, request, abort
+from collections import Counter
 from web.models.result import Result
 from web.utils.matplotlib_drawer import MatplotlibDrawer
+from flask import Blueprint, render_template, redirect, session, request, abort
 
 analysis = Blueprint('analysis', __name__)
 
@@ -136,7 +134,13 @@ def draw():
     return response.to_json()
 
 
-def get_charts_by_matplotlib(drawer, items: dict):
+def get_charts_by_matplotlib(drawer: MatplotlibDrawer, items: dict):
+    """ get and draw chart by matplotlib
+
+    :Arg:
+     - drawer: MatplotlibDrawer
+     - items: response data dict
+    """
     chart = items['bar']
     chartdata = chart['data']
     keys = list(chartdata.keys())
