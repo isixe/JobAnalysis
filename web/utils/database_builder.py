@@ -39,7 +39,7 @@ class Database():
         if admin_user:
             return
 
-        admin_user = User(username='admin', password='123456')
+        admin_user = User(username='admin', password='admin')
         session.add(admin_user)
         session.commit()
         session.close()
