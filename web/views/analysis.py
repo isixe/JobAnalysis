@@ -44,13 +44,13 @@ def main():
 def draw():
     """ Draw job analysis image by matplotlib """
 
-    if not all(request.args.get(key) for key in ['keyword','name', 'type', 'chartype']):
-        abort(400, description='参数不能为空！')
-
     keyword = request.args.get('keyword')
     name = request.args.get('name')
     dtype = request.args.get('type')
     chartype = request.args.get('chartype')
+
+    if name not in ['51job'] and not dtype and not chartype:
+        abort(400, description='参数不能为空！')
 
     directory = f'{os.path.abspath("..")}/output/clean'
     data = get_data_by_name(name, dtype, directory)
@@ -70,6 +70,8 @@ def draw():
     salary = pd.concat([minSalary, maxSalary], axis=0)
     avgMinSalary = int(sum(minSalary) / len(minSalary))
     avgMaxSalary = int(sum(maxSalary) / len(maxSalary))
+    salaryLevel = str(int(max(salary) / 6))
+    salaryLevel = salaryLevel[0] + (len(salaryLevel) - 1) * '0'
 
     companySize = dict(data['companySize'].value_counts())
     companySize.pop('')
@@ -79,7 +81,7 @@ def draw():
     topWordFrequents = '、'.join([item[0] for item in wordFrequent.most_common(3)])
 
     companyName = dict(data['companyName'].value_counts())
-    print(companyName)
+    # print(companyName)
 
     items = {
         'bar': {
@@ -100,7 +102,7 @@ def draw():
             'data': salary.tolist(),
             'xlabel': '薪资数量',
             'ylabel': '薪资水平',
-            'issue': f'薪资主要分布在 <b>0-{int(max(salary) / 6)}</b> 区间，薪资越低数量月多，薪资越高数量越少'
+            'issue': f'薪资主要分布在 <b>0-{salaryLevel}</b> 区间，薪资越低数量月多，薪资越高数量越少'
         },
         'plot': {
             'title': '薪资折线图',
