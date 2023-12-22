@@ -47,7 +47,6 @@ class MatplotlibDrawer(object):
 
         return self.plt
 
-
     def pie(self, x: list, labels: list, title: str, legendlabels: list):
         """  Draw pie by plt
 
@@ -64,6 +63,25 @@ class MatplotlibDrawer(object):
         ax.legend(legendlabels, loc='upper right', bbox_to_anchor=(1.35, 1.1))
         self.plt.title(title, y=1.05)
         self.plt.axis('equal')
+        return self.plt
+
+    def boxplot(self, x: list, y: list, title: str, xlabel: str, ylabel: str):
+        """ Draw boxplot by plt
+
+        :Arg:
+         - x: x axis list
+         - y: y axis list
+         - title: plt title
+         - xlabel: x axis label
+         - ylabel: y axis label
+        """
+        self.plt.boxplot(y)
+        self.plt.xticks(range(1, len(x) + 1), x)
+        self.plt.title(title, y=1.05)
+        self.plt.xlabel(xlabel)
+        self.plt.ylabel(ylabel)
+        self.plt.gca().spines['top'].set_visible(False)
+        self.plt.gca().spines['right'].set_visible(False)
         return self.plt
 
     def scatter(self, x: list, y: list, title: str, xlabel: str, ylabel: str):
