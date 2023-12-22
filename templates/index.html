@@ -462,6 +462,36 @@
         }
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const check = document.getElementById('dark-version');
+        const barfixed = document.getElementById('navbarFixed');
+        barfixed.click();
+
+        check.addEventListener('click', (e) => {
+            if (check.checked) {
+                localStorage.setItem('dark', 'true');
+            } else {
+                localStorage.setItem('dark', 'false');
+            }
+        });
+        if (localStorage.getItem('dark') === 'true') {
+            check.click();
+            darkMode();
+        }
+
+        barfixed.addEventListener('click', (e) => {
+            if (barfixed.checked) {
+                localStorage.setItem('barfixed', 'true');
+            } else {
+                localStorage.setItem('barfixed', 'false');
+            }
+        });
+        if (localStorage.getItem('barfixed') === 'true') {
+            barfixed.click();
+        }
+    });
 </script>
 
 <!-- Setting Toast by sweetalert -->
@@ -476,7 +506,7 @@
             toast.addEventListener('mouseenter', Swal.stopTimer)
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
-    })
+    });
 </script>
 
 <!-- Data loader -->
