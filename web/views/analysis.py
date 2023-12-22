@@ -44,15 +44,21 @@ def main():
 def draw():
     """ Draw job analysis image by matplotlib """
 
-    if not all(request.args.get(key) for key in ['name', 'type', 'chartype']):
+    if not all(request.args.get(key) for key in ['keyword','name', 'type', 'chartype']):
         abort(400, description='参数不能为空！')
 
+    keyword = request.args.get('keyword')
     name = request.args.get('name')
     dtype = request.args.get('type')
     chartype = request.args.get('chartype')
 
     directory = f'{os.path.abspath("..")}/output/clean'
     data = get_data_by_name(name, dtype, directory)
+
+    if not keyword == '':
+        keywords = keyword.split()
+        target = data.astype(str).apply(lambda row: any(re.search(kw, cell) for kw in keywords for cell in row), axis=1)
+        data = data[target]
 
     workYearCount = data['workYear'].value_counts()
     workYearCount = dict(sorted(workYearCount.items(), key=lambda x: int(re.findall(r'\d+', x[0])[0])))
@@ -71,6 +77,9 @@ def draw():
     text = data['tags'].str.cat(sep=',')
     wordFrequent = Counter(text.split(','))
     topWordFrequents = '、'.join([item[0] for item in wordFrequent.most_common(3)])
+
+    companyName = dict(data['companyName'].value_counts())
+    print(companyName)
 
     items = {
         'bar': {
