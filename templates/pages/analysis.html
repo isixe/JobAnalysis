@@ -133,6 +133,8 @@
                 <div class="ms-md-auto pe-md-3 d-flex align-items-center">
 
                     <div class="input-group input-group-outline">
+                        <label class="form-label">输入搜索关键词...</label>
+                        <input type="text" id="search" class="form-control">
                     </div>
 
                 </div>
@@ -382,6 +384,7 @@
 <!-- Chart loader -->
 <script>
     ;(() => {
+        var timerInterval = 0;
         let saveType = localStorage.getItem('datasource');
         let saveChartype = localStorage.getItem('chartype');
 
@@ -413,10 +416,13 @@
             window.location.reload();
         });
 
+        const paramsString = window.location.search
+        const params = new URLSearchParams(paramsString);
+        const keyword = params.get('keyword') == null ? '' : params.get('keyword');
 
         const fetchData = async () => {
             try {
-                const url = `/api/analysis?name=${dataname}&type=${saveType}&chartype=${saveChartype}`;
+                const url = `/api/analysis?keyword=${keyword}&name=${dataname}&type=${saveType}&chartype=${saveChartype}`;
                 const response = await fetch(url, {
                     method: 'GET',
                 });
@@ -429,6 +435,26 @@
             }
         };
 
+        Swal.fire({
+            title: "正在绘图中，请等待",
+            html: "已经渲染<b></b>秒.",
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading();
+                const timer = Swal.getPopup().querySelector("b");
+                clearInterval(timerInterval);
+                let Interval = 0;
+                timerInterval = setInterval(() => {
+                    Interval++;
+                    timer.textContent = Interval;
+                }, 1000);
+            },
+            willClose: () => {
+                timerInterval = 0;
+                clearInterval(timerInterval);
+            }
+        });
+
         fetchData().then(result => {
 
             if (result.status === 0) {
@@ -440,6 +466,12 @@
             }
 
             if (result.status === 1) {
+                Swal.close();
+                clearInterval(timerInterval);
+                Toast.fire({
+                    icon: 'success',
+                    title: '加载完成'
+                });
                 const items = result.data;
                 const content = document.getElementById('main-content');
                 for (const key in items) {
@@ -447,7 +479,7 @@
                         const item = items[key];
 
                         const chart = document.createElement('div');
-                        chart.className='col-md-6';
+                        chart.className = 'col-md-6';
                         chart.innerHTML = `<div class="card m-2">
                                                 <div class="card-header">
                                                     <h6 class="mb-0 ">${item.title}</h6>
@@ -466,6 +498,22 @@
                         content.appendChild(chart);
                     }
                 }
+            }
+        });
+    })();
+</script>
+
+<!-- Keyword earch -->
+<script>
+    ;(() => {
+        document.getElementById('search').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const search = document.getElementById('search');
+                const keyword = search.value;
+                let url = new URL(window.location.href);
+                let params = url.searchParams;
+                params.set('keyword', keyword);
+                window.location.href = url.toString();
             }
         });
     })();
