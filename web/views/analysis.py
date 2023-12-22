@@ -135,9 +135,9 @@ def draw():
         'barh': {
             'title': '公司规模条形图',
             'data': companySize,
-            'xlabel': '公司规模',
-            'ylabel': '公司数量',
-            'legendlabels': ['公司规模'],
+            'xlabel': '公司数量',
+            'ylabel': '公司规模',
+            'legendlabels': ['公司数量'],
             'issue': f'公司规模主要分布在 <b>{max(companySize, key=companySize.get)}</b> 区间'
         },
         'wordcloud': {
