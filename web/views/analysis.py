@@ -81,8 +81,6 @@ def draw():
     wordFrequent = Counter(text.split(','))
     topWordFrequents = '、'.join([item[0] for item in wordFrequent.most_common(3)])
 
-    companyName = dict(data['companyName'].value_counts())
-
     salaryByDegree = data.groupby('degree')
     degree = list(salaryByDegree.groups.keys())
 
