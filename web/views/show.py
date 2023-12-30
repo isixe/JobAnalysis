@@ -213,6 +213,7 @@ def export():
     name = request.args.get('name')
     dtype = request.args.get('type')
     file_source = request.args.get('source')
+    keyword = request.args.get('keyword')
 
     if not file_source or not dtype or name not in ['51job']:
         abort(400, description='参数异常！')
@@ -228,6 +229,11 @@ def export():
     }
 
     data = data[file_source]
+
+    if keyword:
+        keywords = keyword.split()
+        target = data.astype(str).apply(lambda row: any(re.search(kw, cell) for kw in keywords for cell in row), axis=1)
+        data = data[target]
 
     if dtype == 'csv':
         data.to_csv(CSV_EXPORT_PATH, index=False)

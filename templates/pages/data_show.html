@@ -134,8 +134,7 @@
                 <div class="ms-md-auto pe-md-3 d-flex align-items-center">
 
                     <div class="input-group input-group-outline">
-                        <label class="form-label">输入搜索关键词...</label>
-                        <input type="text" id="search" class="form-control">
+                        <input type="text" id="search" class="form-control" placeholder="输入搜索关键词...">
                     </div>
 
                 </div>
@@ -864,8 +863,11 @@
     const exportByType = async () => {
         const source = localStorage.getItem('datasource');
         const type = document.getElementById('data-type').value;
+        const paramsString = window.location.search
+        const params = new URLSearchParams(paramsString);
+        const keyword = params.get('keyword') == null ? '' : params.get('keyword');
         let dataname = localStorage.getItem('dataname') == null ? '51job' : localStorage.getItem('dataname');
-        window.location.href = `/api/jobs/export?name=${dataname}&source=${source}&type=${type}`;
+        window.location.href = `/api/jobs/export?keyword=${keyword}&name=${dataname}&source=${source}&type=${type}`;
     };
 </script>
 
