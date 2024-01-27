@@ -52,6 +52,7 @@ typing_extensions==4.9.0
 tzdata==2023.3
 urllib3==2.1.0
 wcwidth==0.2.12
+webdriver-manager==4.0.1
 Werkzeug==3.0.1
 wordcloud==1.9.3
 wsproto==1.2.0
