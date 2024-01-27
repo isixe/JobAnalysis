@@ -1,15 +1,15 @@
 <div align=center>
-    <img style="text-align:center" src="https://raw.githubusercontent.com/isixe/JobAnalysis/static/img/logo/favicon.ico width=20%"  alt="favicon.ico"/>
+    <img style="text-align:center" src="https://raw.githubusercontent.com/isixe/JobAnalysis/main/static/img/logo/favicon.svg" width=20%  alt="favicon.ico"/>
     <h1>JobAnalysis</h1>
     <p>基于 Flask 的招聘工作数据分析，数据可视化使用 matplotlib</p>
 </div>
 
 # 预览
-![主页](https://raw.githubusercontent.com/isixe/JobAnalysis//doc/img/home.png)
+![主页](https://github.com/isixe/JobAnalysis/blob/main/doc/img/analysis.png?raw=true)
 
-![数据爬取](https://raw.githubusercontent.com/isixe/JobAnalysis//doc/img/spider.png)
+![数据爬取](https://github.com/isixe/JobAnalysis/blob/main/doc/img/spider.png?raw=true)
 
-![数据分析](https://raw.githubusercontent.com/isixe/JobAnalysis//doc/img/analysis.png)
+![数据分析](https://github.com/isixe/JobAnalysis/blob/main/doc/img/analysis.png?raw=true)
 
 # 环境要求
 本项目使用 Edge 执行数据爬取操作，请确保已安装 Edge
@@ -81,20 +81,20 @@ wsproto==1.2.0
 ```
 ├─function 
 │ ├─clean 
-│ │ ├─jobcleaner51.py                    --清洗-工作数据
+│ │ ├─jobcleaner51.py                       --清洗-工作数据
 │ │ └─__init__.py 
 │ ├─spider 
 │ │ ├─area 
-│ │ │ ├─areaspider51.py               --爬取-地区数据
+│ │ │ ├─areaspider51.py                     --爬取-地区数据
 │ │ │ └─__init__.py 
-│ │ ├─jobspider51.py                     --爬取-工作数据
+│ │ ├─jobspider51.py                        --爬取-工作数据
 │ │ └─__init__.py 
 │ └─_init__.py 
 ├─LICENSE 
 ├─log 
 │ ├─handler_logger.py                       --日志处理器
 │ ├─__init__.py 
-├─output                                       --文件输出
+├─output                                    --文件输出
 │ ├─area 
 │ │ ├─51area.csv 
 │ │ └─51area.db 
@@ -119,21 +119,21 @@ wsproto==1.2.0
 │   ├─data_spider.html                       --数据爬取页
 │   ├─sign_in.html                           --登录
 │   └─sign_up.html                           --注册
-├─test                                          --测试
+├─test                                       --测试
 │ ├─cleaner_test.py 
 │ └─spider_test.py 
 └─web 
-  ├─app.py                                      --启动入口
+  ├─app.py                                   --启动入口
   ├─identifier.sqlite 
-  ├─models                                      --实体
+  ├─models                                   --实体
   │ ├─result.py 
   │ ├─user.py 
   │ └─___init__.py 
-  ├─utils                                       --工具类
+  ├─utils                                    --工具类
   │ ├─database_builder.py 
   │ ├─matplotlib_drawer.py 
   │ └─___init__.py 
-  ├─views                                       --视图
+  ├─views                                    --视图
   │ ├─analysis.py                            --数据分析
   │ ├─auth.py                                --登录授权
   │ ├─clean.py                               --数据清洗
