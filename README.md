@@ -5,7 +5,7 @@
 </div>
 
 # 预览
-![主页](https://github.com/isixe/JobAnalysis/blob/main/doc/img/analysis.png?raw=true)
+![主页](https://github.com/isixe/JobAnalysis/blob/main/doc/img/home.png?raw=true)
 
 ![数据爬取](https://github.com/isixe/JobAnalysis/blob/main/doc/img/spider.png?raw=true)
 
