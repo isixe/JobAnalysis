@@ -1,7 +1,7 @@
 <div align=center>
     <img style="text-align:center" src="https://raw.githubusercontent.com/isixe/JobAnalysis/main/static/img/logo/favicon.svg" width=20%  alt="favicon.ico"/>
     <h1>JobAnalysis</h1>
-    <p>基于 Flask 的招聘工作数据分析，数据可视化使用 matplotlib</p>
+    <p>基于 Flask 的招聘工作数据分析，数据可视化使用 matplotlib，界面基于 <a href="https://github.com/creativetimofficial/material-dashboard">material-dashboard</p>
 </div>
 
 # 预览
