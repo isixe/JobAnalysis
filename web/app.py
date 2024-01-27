@@ -11,7 +11,6 @@ from web.views.auth import auth
 from web.views.clean import clean
 from web.views.index import index
 from web.views.show import show
-from web.views.predict import predict
 from web.views.analysis import analysis
 from web.views.spider import spider
 
@@ -32,7 +31,6 @@ class App(Flask):
         self.register_blueprint(index)
         self.register_blueprint(auth)
         self.register_blueprint(show)
-        self.register_blueprint(predict)
         self.register_blueprint(analysis)
         self.register_blueprint(spider)
         self.register_blueprint(clean)

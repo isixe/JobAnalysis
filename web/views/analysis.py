@@ -35,7 +35,7 @@ def login_required(view_func):
 @analysis.route('/analysis')
 @login_required
 def main():
-    """ linear predict page """
+    """ analysis page """
 
     return render_template('pages/analysis.html')
 
