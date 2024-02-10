@@ -6,14 +6,14 @@
     <p>Analysis of recruitment work data based on Flask, Selenium, Data visualization uses matplotlib, interface is based on <a href="https://github.com/creativetimofficial/material-dashboard">material-dashboard</p>
 </div>
 
-# Preview
+## Preview
 ![Home](https://github.com/isixe/JobAnalysis/blob/main/doc/img/home.png?raw=true)
 
 ![data spider](https://github.com/isixe/JobAnalysis/blob/main/doc/img/spider.png?raw=true)
 
 ![data analysis](https://github.com/isixe/JobAnalysis/blob/main/doc/img/analysis.png?raw=true)
 
-# Environmental Requirement
+## Environmental Requirement
 This project uses Edge to perform data crawling operations. Please ensure that Edge is installed.
 ```
 Edge
@@ -76,10 +76,10 @@ Werkzeug==3.0.1
 wordcloud==1.9.3
 wsproto==1.2.0
 ```
-# Usage (Pycharm)
+## Usage (Pycharm)
 run web/app.py
 
-# Project Structure
+## Project Structure
 ```
 ├─function 
 │ ├─clean 
