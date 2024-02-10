@@ -13,7 +13,7 @@
 
 ![data analysis](https://github.com/isixe/JobAnalysis/blob/main/doc/img/analysis.png?raw=true)
 
-# Environmental requirement
+# Environmental Requirement
 This project uses Edge to perform data crawling operations. Please ensure that Edge is installed.
 ```
 Edge
@@ -79,7 +79,7 @@ wsproto==1.2.0
 # Usage (Pycharm)
 run web/app.py
 
-# Project structure
+# Project Structure
 ```
 ├─function 
 │ ├─clean 
