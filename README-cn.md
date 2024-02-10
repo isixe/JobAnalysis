@@ -7,14 +7,14 @@
     <p>基于 Flask 的招聘工作数据分析，数据可视化使用 matplotlib，界面基于 <a href="https://github.com/creativetimofficial/material-dashboard">material-dashboard</p>
 </div>
 
-# 预览
+## 预览
 ![主页](https://github.com/isixe/JobAnalysis/blob/main/doc/img/home.png?raw=true)
 
 ![数据爬取](https://github.com/isixe/JobAnalysis/blob/main/doc/img/spider.png?raw=true)
 
 ![数据分析](https://github.com/isixe/JobAnalysis/blob/main/doc/img/analysis.png?raw=true)
 
-# 环境要求
+## 环境要求
 本项目使用 Edge 执行数据爬取操作，请确保已安装 Edge
 ```
 Edge
@@ -77,10 +77,10 @@ Werkzeug==3.0.1
 wordcloud==1.9.3
 wsproto==1.2.0
 ```
-# 运行 (Pycharm)
+## 运行 (Pycharm)
 启动 web/app.py
 
-# 项目结构
+## 项目结构
 ```
 ├─function 
 │ ├─clean 
