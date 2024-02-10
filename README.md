@@ -1,7 +1,7 @@
 <div align=center>
     <img style="text-align:center" src="https://raw.githubusercontent.com/isixe/JobAnalysis/main/static/img/logo/favicon.svg" width=20%  alt="favicon.ico"/>
     <h1>JobAnalysis</h1>
-    <b>English | <a href="https://github.com/isixe/JobAnalysis/edit/main/README-cn.md">中文</a></b>
+    <b>English | <a href="https://github.com/isixe/JobAnalysis/blob/main/README-cn.md">中文</a></b>
     <p></p>
     <p>Analysis of recruitment work data based on Flask, Selenium, Data visualization uses matplotlib, interface is based on <a href="https://github.com/creativetimofficial/material-dashboard">material-dashboard</p>
 </div>
